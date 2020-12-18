@@ -11,7 +11,7 @@ import ni.org.ics.smil.cssfv.api.entity.ParticipanteView;
 import ni.org.ics.smil.cssfv.api.service.ParticipanteViewService;
 
 @RestController
-public class ParticipanteViewController {
+public class ParticipanteController {
 
 	@Autowired
 	private ParticipanteViewService service;

@@ -23,8 +23,8 @@ public class CatCategoriaController {
 	private CatCategoriaService service;
 
 	@PostMapping("/catalogos/categorias")
-	public CatCategoria addCatCategoria(@RequestBody CatCategoria CatCategoria) {
-		return service.saveCatCategoria(CatCategoria);
+	public CatCategoria addCatCategoria(@RequestBody CatCategoria catCategoria) {
+		return service.saveCatCategoria(catCategoria);
 	}
 
     @GetMapping("/catalogos/categorias/{id}")
@@ -39,8 +39,8 @@ public class CatCategoriaController {
     }
 
     @PutMapping("/catalogos/categorias")
-    public CatCategoria updateCatCategoria(@RequestBody CatCategoria CatCategoria) {
-        return service.updateCatCategoria(CatCategoria);
+    public CatCategoria updateCatCategoria(@RequestBody CatCategoria catCategoria) {
+        return service.updateCatCategoria(catCategoria);
     }
 
     @DeleteMapping("/catalogos/categorias/{id}")

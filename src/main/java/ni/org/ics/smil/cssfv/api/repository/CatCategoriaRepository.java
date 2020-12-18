@@ -1,6 +1,5 @@
 package ni.org.ics.smil.cssfv.api.repository;
 
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatCambioCategoria;
 import ni.org.ics.smil.cssfv.api.entity.catalogos.CatCategoria;
 
 import java.util.List;

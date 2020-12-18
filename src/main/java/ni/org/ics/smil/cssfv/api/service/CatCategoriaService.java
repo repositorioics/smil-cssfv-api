@@ -22,8 +22,8 @@ public class CatCategoriaService {
 		return repository.save(CatCategoria);
 	}
 
-	public List<CatCategoria> saveCatCategorias(List<CatCategoria> cambioCategorias) {
-		return repository.saveAll(cambioCategorias);
+	public List<CatCategoria> saveCatCategorias(List<CatCategoria> categorias) {
+		return repository.saveAll(categorias);
 	}
 
 	public List<CatCategoria> getCatCategorias() {
