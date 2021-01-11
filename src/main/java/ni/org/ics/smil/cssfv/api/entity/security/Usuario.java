@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 import org.hibernate.envers.Audited;
 import org.springframework.data.history.RevisionMetadata;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,7 @@ public class Usuario {
 	private String usuario;
 	private int codigoPersonal;
 	private String clave;
+	
 	private String correo;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -45,6 +48,7 @@ public class Usuario {
 	private String imagenUrl;
 	private boolean activo;
 	
+	@JsonIgnore
 	@Transient
 	private RevisionMetadata<Integer> editVersion;
 }

@@ -2,7 +2,10 @@ package ni.org.ics.smil.cssfv.api.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
@@ -14,11 +17,16 @@ import ni.org.ics.smil.cssfv.api.repository.SegUsuarioRepository;
  */
 @Service
 public class SegUsuarioService {
-
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Autowired
 	private SegUsuarioRepository repository;
 
+	@Transactional(rollbackOn = Exception.class) 
 	public Usuario saveUsuario(Usuario usuario) {
+		usuario.setClave(bCryptPasswordEncoder.encode(usuario.getClave()));
 		return repository.save(usuario);
 	}
 

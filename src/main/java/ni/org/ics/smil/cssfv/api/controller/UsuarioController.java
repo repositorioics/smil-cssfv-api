@@ -19,7 +19,7 @@ public class UsuarioController {
 	@Autowired
 	private SegUsuarioService service;
 	
-	@PostMapping("/seguridad/usuarios")
+	@PostMapping("/seguridad/usuarios/add")
 	public Usuario addUsuario(@RequestBody Usuario usuario) {
 		return service.saveUsuario(usuario);
 	}
