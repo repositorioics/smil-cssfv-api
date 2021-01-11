@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatCambioCategoria;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCambioCategoria;
 import ni.org.ics.smil.cssfv.api.service.CatCambioCategoriaService;
 
 @RestController

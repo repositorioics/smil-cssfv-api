@@ -16,9 +16,9 @@ import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatClasificacion;
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatConsulta;
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatTubo;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatClasificacion;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatConsulta;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTubo;
 
 @Data
 @AllArgsConstructor

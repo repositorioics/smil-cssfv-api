@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatTubo;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTubo;
 import ni.org.ics.smil.cssfv.api.service.CatTuboService;
 
 @RestController

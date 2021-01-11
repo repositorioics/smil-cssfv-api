@@ -16,8 +16,9 @@ import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatMotivoAnulacion;
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatMuestra;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMotivoAnulacion;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMuestra;
+import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 
 @Data
 @AllArgsConstructor
@@ -59,6 +60,10 @@ public class Muestra {
 	@Temporal(TemporalType.DATE)
 	private Date fif;
 
+	@ManyToOne
+	@JoinColumn(name="usuario_id", referencedColumnName = "id")
+	private Usuario usuarioId;
+	
 	@ManyToOne
 	@JoinColumn(name="mx_id", referencedColumnName = "id")
 	private CatMuestra mxId;

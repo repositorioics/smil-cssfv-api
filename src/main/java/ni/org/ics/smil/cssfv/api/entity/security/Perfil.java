@@ -1,31 +1,34 @@
-package ni.org.ics.smil.cssfv.api.entity.catalogos;
+package ni.org.ics.smil.cssfv.api.entity.security;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+import org.springframework.data.history.RevisionMetadata;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
-Created by Miguel Salinas on 26/11/2020.
-*/
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cat_tipo_pruebas")
-public class CatTipoPrueba {
-
+@Table(name = "seg_perfil")
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+public class Perfil {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	private String nombre;
 	private String descripcion;
-	private Boolean activo;
-	
+
+	@Transient
+	private RevisionMetadata<Integer> editVersion;
 }

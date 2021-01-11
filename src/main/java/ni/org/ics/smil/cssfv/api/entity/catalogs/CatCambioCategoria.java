@@ -1,4 +1,4 @@
-package ni.org.ics.smil.cssfv.api.entity.catalogos;
+package ni.org.ics.smil.cssfv.api.entity.catalogs;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

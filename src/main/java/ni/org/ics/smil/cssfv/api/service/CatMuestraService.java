@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatMuestra;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMuestra;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.CatMuestraRepository;
 

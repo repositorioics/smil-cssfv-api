@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ni.org.ics.smil.cssfv.api.entity.catalogos.CatTipoPrueba;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoPrueba;
 import ni.org.ics.smil.cssfv.api.service.CatTipoPruebaService;
 
 @RestController

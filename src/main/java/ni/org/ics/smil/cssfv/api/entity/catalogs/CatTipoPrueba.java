@@ -1,4 +1,4 @@
-package ni.org.ics.smil.cssfv.api.entity.catalogos;
+package ni.org.ics.smil.cssfv.api.entity.catalogs;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +18,8 @@ Created by Miguel Salinas on 26/11/2020.
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cat_categoria")
-//@Audited(withModifiedFlag = true)
-public class CatCategoria {
+@Table(name = "cat_tipo_pruebas")
+public class CatTipoPrueba {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +28,4 @@ public class CatCategoria {
 	private String descripcion;
 	private Boolean activo;
 	
-	//@Transient
-	//private RevisionMetadata<Integer> editVersion;
 }
