@@ -43,4 +43,15 @@ public class UsuarioController {
     public Usuario updateClaveUsuario(@RequestBody Usuario usuario) {
         return service.updateClaveUsuario(usuario);
     }
+	
+	/*@GetMapping(value = "/refreshtoken")
+	public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
+		// From the HttpRequest get the claims
+		Claim claims = (Claim) request.getAttribute("claims");
+
+		Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+		String token = jwtUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
+		return ResponseEntity.ok(new AuthenticationResponse(token));
+	}*/
+ 
 }
