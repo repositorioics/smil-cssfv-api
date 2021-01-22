@@ -32,8 +32,7 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 
-		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		
 
 		String message;
 		// Check if the request as any exception that we have stored in Request
@@ -54,5 +53,8 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 			byte[] body = new ObjectMapper().writeValueAsBytes(Collections.singletonMap("error", message));
 			response.getOutputStream().write(body);
 		}
+		
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 	}
 }

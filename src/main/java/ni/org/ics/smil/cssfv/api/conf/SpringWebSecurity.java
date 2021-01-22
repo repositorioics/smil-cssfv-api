@@ -1,5 +1,7 @@
 package ni.org.ics.smil.cssfv.api.conf;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,8 +45,9 @@ public class SpringWebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll().anyRequest()
-				.authenticated()
+		http.csrf().disable().authorizeRequests()
+		.antMatchers("/authenticate").permitAll()
+		.anyRequest().authenticated()
 				// if any exception occurs call this
 				.and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().
 				// make sure we use stateless session; session won't be used to
@@ -71,6 +74,9 @@ public class SpringWebSecurity extends WebSecurityConfigurerAdapter {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
 		CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+		//Configurar CORS. PutMapping
+		corsConfiguration.setAllowedOrigins(Arrays.asList("*"));
+		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"));
 		source.registerCorsConfiguration("/**", corsConfiguration);
 
 		return source;
