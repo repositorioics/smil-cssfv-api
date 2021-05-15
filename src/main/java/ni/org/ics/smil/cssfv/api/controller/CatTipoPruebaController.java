@@ -31,6 +31,16 @@ public class CatTipoPruebaController {
     public CatTipoPrueba findCatTipoPruebaById(@PathVariable Long id) {
         return service.getCatTipoPruebaById(id);
     }
+    
+    @GetMapping("/catalogos/tipos-pruebas/muestra-id/{id}")
+    public List<CatTipoPrueba> findAllTipoPruebasByIdMuestra(@PathVariable Long id) {
+    	return service.getAllTipoPruebasByIdMuestra(id);
+    }
+    
+    @GetMapping("/catalogos/tipos-pruebas/muestra-id/nivel")
+    public List<CatTipoPrueba> findAllTipoPruebasByIdMuestraAndNivel(@RequestParam Long id, @RequestParam Integer nivel) {
+    	return service.getCatTipoPruebaByIdAndNivel(id, nivel);
+    }
 
     @GetMapping("/catalogos/tipos-pruebas")
     public List<CatTipoPrueba> findCatTipoPrueba(@RequestParam(required = false) String filter) {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ni.org.ics.smil.cssfv.api.entity.security.PerfilUsuario;
 import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.SegUsuarioRepository;
@@ -60,6 +61,8 @@ public class SegUsuarioService {
 		oldUsuario.setCodigoPersonal(usuario.getCodigoPersonal());
 		oldUsuario.setCorreo(usuario.getCorreo());
 		oldUsuario.setImagenUrl(usuario.getImagenUrl());
+		oldUsuario.setActivo(usuario.isActivo());
+		oldUsuario.setUsuario(usuario.getUsuario());
 		return repository.save(oldUsuario);
 	}
 	
@@ -68,7 +71,7 @@ public class SegUsuarioService {
 		
 		if (oldUsuario == null) throw new NotEntityFoundException(Usuario.class.getSimpleName(), "Id", String.valueOf(usuario.getId()));
 		
-		oldUsuario.setClave(usuario.getClave());
+		oldUsuario.setClave(bCryptPasswordEncoder.encode(usuario.getClave()));
 		return repository.save(oldUsuario);
 	}
 }

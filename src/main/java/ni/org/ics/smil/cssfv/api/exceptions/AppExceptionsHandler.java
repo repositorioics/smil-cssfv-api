@@ -54,4 +54,13 @@ public class AppExceptionsHandler extends ResponseEntityExceptionHandler {
 		
 		return new ResponseEntity<Object>(errorMessage, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
 	}
+	
+	@ExceptionHandler(value = {IllegalStateException.class})
+	public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
+		String message = ex.getLocalizedMessage();
+		if (message == null) message = ex.toString();
+		ApiError errorMessage = new ApiError(new Date(), message);
+		
+		return new ResponseEntity<Object>(errorMessage, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+	}
 }

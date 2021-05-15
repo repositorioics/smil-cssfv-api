@@ -37,6 +37,11 @@ public class CatConsultaController {
     	if (filter == null) return service.getCatConsultas();
     	else return service.getCatConsultaByName(filter);
     }
+    
+    @GetMapping("/catalogos/consultas/activas")
+    public List<CatConsulta> findAllConsultas() {
+    	return service.getAllConsultas();
+    }
 
     @PutMapping("/catalogos/consultas")
     public CatConsulta updateCatConsulta(@RequestBody CatConsulta catConsulta) {

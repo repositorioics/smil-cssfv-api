@@ -29,6 +29,10 @@ public class CatClasificacionService {
 	public List<CatClasificacion> getCatClasificaciones() {
 		return repository.findAll();
 	}
+	
+	public List<CatClasificacion> getAllClasificaciones() {
+		return repository.findAllClasificacionesActivas();
+	}
 
 	public CatClasificacion getCatClasificacionById(Long id) {
 		CatClasificacion CatClasificacion = repository.findById(id).orElse(null);

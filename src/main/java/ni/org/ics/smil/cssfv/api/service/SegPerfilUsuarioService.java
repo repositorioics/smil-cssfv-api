@@ -19,8 +19,8 @@ public class SegPerfilUsuarioService {
 	@Autowired
 	private SegPerfilUsuarioRepository repository;
 
-	public PerfilUsuario savePerfilUsuario(PerfilUsuario perfilUsuario) {
-		return repository.save(perfilUsuario);
+	public List<PerfilUsuario> savePerfilUsuario(List<PerfilUsuario> perfilUsuario) {
+		return repository.saveAll(perfilUsuario);
 	}
 
 	public List<PerfilUsuario> savePerfilUsuarios(List<PerfilUsuario> perfilUsuarios) {
@@ -50,5 +50,9 @@ public class SegPerfilUsuarioService {
 		PerfilUsuario oldPerfilUsuario = repository.findById(id).orElse(null);		
 		if (oldPerfilUsuario == null) throw new NotEntityFoundException(PerfilUsuario.class.getSimpleName(), "Id", String.valueOf(id));
 		repository.deleteById(id);
+	}
+	
+	public List<PerfilUsuario> getPerfilUsuarioByNombre(String nombre) {
+		return repository.findByPerfilIdNombre(nombre);
 	}
 }

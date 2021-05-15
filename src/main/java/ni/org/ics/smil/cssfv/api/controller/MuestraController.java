@@ -1,5 +1,8 @@
 package ni.org.ics.smil.cssfv.api.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +48,18 @@ public class MuestraController {
     public Muestra updateMuestra(@RequestBody Muestra muestra) {
         return service.updateMuestra(muestra);
     }
+	
+	@PutMapping("/muestras/anular")
+    public Muestra updateAnularMuestra(@RequestBody Muestra muestra) {
+        return service.anularMuestra(muestra);
+    }
+	
+	//@GetMapping("/muestras/byCodigoParticipante_Y_catMuestraId/{codigoParticipante}/{id}")
+	//public long getMuestrasByCodigoParticipanteYCatMuestraId(@PathVariable Integer codigoParticipante ,@PathVariable Long id) {
+	@GetMapping("/muestras/byCodigoParticipante_Y_catMuestraId")
+	public long getMuestrasByCodigoParticipanteYCatMuestraId(@RequestParam Integer codigoParticipante ,@RequestParam Long id) {
+		return service.countMxByCodigoParticipanteAndTypeMx(codigoParticipante, id);
+	}
 	
 	/*BHC*/
 	@GetMapping("/muestras/bhc")
@@ -114,13 +129,23 @@ public class MuestraController {
 		return service.getMuestrasInfluenza();
 	}
 	
+	@GetMapping("/muestras/influenza/fechaDelDia")
+	public List<MxInfluenza> getMuestrasInfluenzaByFechaDelDia() {
+		return service.getMuestrasInfluenzaByCurrentDate();
+	}
+	
+	@GetMapping("/muestras/influenza/participantes/codigo/fechas")
+    public List<MxInfluenza> getMuestraInfluenzaByRangeFechaAndCodigo(@RequestParam Integer codigoParticipante, @RequestParam String strFecha1, @RequestParam String strFecha2) throws ParseException {
+		return service.getMuestraInfluenzaByCodigoParticipanteAndFechaToma(codigoParticipante, strFecha1, strFecha2);		
+    }
+	
 	@GetMapping("/muestras/influenza/{id}")
     public MxInfluenza getMuestraInfluenzaById(@PathVariable Long id) {
         return service.getMuestraInfluenzaById(id);
     }
 	
 	@PostMapping("/muestras/influenza")
-    public MxInfluenza addMuestraInfluenza(@RequestBody MxInfluenza muestra) {
+    public MxInfluenza addMuestraInfluenza(@RequestBody MxInfluenza muestra) throws Exception{
         return service.saveMuestraInfluenza(muestra);
     }
 	
@@ -128,6 +153,16 @@ public class MuestraController {
     public MxInfluenza updateMuestraInfluenza(@RequestBody MxInfluenza muestra) {
         return service.updateMuestraInfluenza(muestra);
     }
+	
+	@GetMapping("/muestras/influenza/participantes/{codigoParticipante}")
+    public List<MxInfluenza> getMuestraInfluenzaByCodigoParticipante(@PathVariable Integer codigoParticipante) {
+        return service.getMuestraInfluenzaByCodigoParticipante(codigoParticipante);
+    }
+	
+	@GetMapping("/muestras/influenza/ultimoRegistro")
+	public MxInfluenza getUltimoRegistro(@RequestParam Integer codigoParticipante) {
+		return service.getUltimoRegistroMuestraInfluenzaByCodigo(codigoParticipante);
+	}
 	
 	/*U01*/
 	@GetMapping("/muestras/u01")

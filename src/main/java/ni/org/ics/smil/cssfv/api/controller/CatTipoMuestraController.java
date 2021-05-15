@@ -37,6 +37,11 @@ public class CatTipoMuestraController {
     	if (filter == null) return service.getCatTiposMuestras();
     	else return service.getCatTipoMuestraByName(filter);
     }
+    
+    @GetMapping("/catalogos/tipos-muestras/activas")
+    public List<CatTipoMuestra> findTipoMuestrasActivas() {
+    	return service.getTipoMuestrasActivas();
+    }
 
     @PutMapping("/catalogos/tipos-muestras")
     public CatTipoMuestra updateCatTipoMuestra(@RequestBody CatTipoMuestra catTipoMuestra) {

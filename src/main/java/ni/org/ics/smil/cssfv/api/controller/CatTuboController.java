@@ -37,6 +37,11 @@ public class CatTuboController {
     	if (filter == null) return service.getCatTubos();
     	else return service.getCatTuboByName(filter);
     }
+    
+    @GetMapping("/catalogos/tubos/activos")
+    public List<CatTubo> findAllTubos() {
+    	return service.getAllCatTubos();
+    }
 
     @PutMapping("/catalogos/tubos")
     public CatTubo updateCatTubo(@RequestBody CatTubo catTubo) {

@@ -29,6 +29,10 @@ public class CatTuboService {
 	public List<CatTubo> getCatTubos() {
 		return repository.findAll();
 	}
+	
+	public List<CatTubo> getAllCatTubos() {
+		return repository.findAllTubosActivos();
+	}
 
 	public CatTubo getCatTuboById(Long id) {
 		CatTubo CatTubo = repository.findById(id).orElse(null);

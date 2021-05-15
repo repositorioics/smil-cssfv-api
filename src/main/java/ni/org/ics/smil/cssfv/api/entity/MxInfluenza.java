@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatResultadosMuestras;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoMuestra;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoPrueba;
 
@@ -41,6 +42,10 @@ public class MxInfluenza {
 	@JoinColumn(name="tipo_muestra_id", referencedColumnName = "id")
 	private CatTipoMuestra tipoMuestraId;
 	
+	/*@ManyToOne
+	@JoinColumn(name="resultado_pr_id", referencedColumnName = "id")
+	private CatResultadosMuestras resultadoPrId;*/
+	
 	private String codLabScan;
 	private Boolean retoma;
 	private Boolean pruebaRapida;
@@ -59,6 +64,12 @@ public class MxInfluenza {
 	private String procPri;
 	private Integer numeroPruebas;
 	private Integer resultado;
+	private String observacionesPr;
+	private String observacionesPrVsr;
+	private String resultadoPr;
+	private String resultadoPrVsr;
+	private Integer numeroPruebasPr;
+	private Integer numeroPruebasPrVsr;
 	//private Time tiempoprocesamiento;
 
 }

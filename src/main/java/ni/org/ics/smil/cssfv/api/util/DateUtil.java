@@ -169,8 +169,4 @@ public class DateUtil {
         return iedadEnAnios.toString()+"/"+iedadEnMeses.toString()+"/"+iedadEnDias.toString();
 
     }
-
-
-
-
 }

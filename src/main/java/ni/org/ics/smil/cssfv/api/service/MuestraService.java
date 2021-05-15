@@ -1,5 +1,9 @@
 package ni.org.ics.smil.cssfv.api.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +69,29 @@ public class MuestraService {
 		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestra.getId().toString());		
 				
 		return repository.save(muestra);
+	}
+	
+	public Muestra anularMuestra(Muestra muestra) {
+		Muestra oldMuestra = repository.findById(muestra.getId()).orElse(null);
+		
+		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestra.getId().toString());		
+		
+		if (muestra.getOtroMotivoAnulacion()) {
+			oldMuestra.setOtroMotivoAnulacion(muestra.getOtroMotivoAnulacion());
+			oldMuestra.setMotivoAnulacion(muestra.getMotivoAnulacion());
+			oldMuestra.setAnulada(true);
+		} else {
+			oldMuestra.setOtroMotivoAnulacion(muestra.getOtroMotivoAnulacion());
+			oldMuestra.setMotivoAnulacionId(muestra.getMotivoAnulacionId());
+			oldMuestra.setAnulada(true);
+		}
+		
+		return repository.save(oldMuestra);
+	}
+	
+	public long countMxByCodigoParticipanteAndTypeMx(Integer codigoParticipante, long id) {
+		long count = repository.countBycodigoParticipanteAndMxIdId(codigoParticipante, id);
+		return count;
 	}
 	
 	/*
@@ -156,7 +183,110 @@ public class MuestraService {
         return repositoryInf.findAll();
     }
 	
-	public MxInfluenza saveMuestraInfluenza(MxInfluenza muestra) {
+	public List<MxInfluenza> getMuestrasInfluenzaByCurrentDate() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		Date startDate = cal.getTime();
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		Date endDate = cal.getTime();
+	    
+	    List<MxInfluenza> mxInfluenza = repositoryInf.findByMuestraIdFechaRegistroBetween(startDate, endDate);
+	    return mxInfluenza;
+    }
+	
+	public List<MxInfluenza> getMuestraInfluenzaByCodigoParticipanteAndFechaToma(Integer codigoParticipante, String fecha1, String fecha2) throws ParseException {
+		
+		List<MxInfluenza> mxInfluenza = new ArrayList<MxInfluenza>();
+		
+		/*Obteniendo la lista por rango de fecha y codigo*/
+		if (codigoParticipante > 0 && fecha1 != "" && fecha2 != "") {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date startDate = sdf.parse(fecha1);
+			Date endDate = sdf.parse(fecha2);
+
+			Calendar cal = Calendar.getInstance();
+			Calendar cal2 = Calendar.getInstance();
+
+			cal.setTime(startDate);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+
+			cal2.setTime(endDate);
+			cal2.set(Calendar.HOUR_OF_DAY, 23);
+			cal2.set(Calendar.MINUTE, 59);
+			cal2.set(Calendar.SECOND, 59);
+
+			Date dFecha1 = cal.getTime();
+
+			Date dFecha2 = cal2.getTime();
+
+			mxInfluenza = repositoryInf.findByMuestraIdCodigoParticipanteAndMuestraIdFechaTomaBetween(
+					codigoParticipante, dFecha1, dFecha2);
+		} else if (codigoParticipante == 0 && fecha1 != "" && fecha2 != "") {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date startDate = sdf.parse(fecha1);
+			Date endDate = sdf.parse(fecha2);
+
+			Calendar cal = Calendar.getInstance();
+			Calendar cal2 = Calendar.getInstance();
+
+			cal.setTime(startDate);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+
+			cal2.setTime(endDate);
+			cal2.set(Calendar.HOUR_OF_DAY, 23);
+			cal2.set(Calendar.MINUTE, 59);
+			cal2.set(Calendar.SECOND, 59);
+
+			Date dFecha1 = cal.getTime();
+
+			Date dFecha2 = cal2.getTime();
+
+			mxInfluenza = repositoryInf.findByMuestraIdFechaRegistroBetween(dFecha1, dFecha2);
+		} else if (codigoParticipante > 0 && fecha1 == "" && fecha2 == "") {
+			mxInfluenza = repositoryInf.findByMuestraIdCodigoParticipante(codigoParticipante);
+		}
+		
+		//if (mxInfluenza.size() <= 0) throw new NotEntityFoundException(MxInfluenza.class.getSimpleName(), "codigo-participante y fecha toma", codigoParticipante.toString() + " & " + fecha1.toString() + " - "+ fecha2.toString());
+		return mxInfluenza;
+	}
+	
+	public MxInfluenza saveMuestraInfluenza(MxInfluenza muestra) throws Exception {
+		
+		Muestra muestraObj = muestra.getMuestraId();
+		
+		/*boolean existeMuestra = verificarExisteMuestraMismoCodigoYDia(muestraObj);
+		if (existeMuestra) {
+			throw new IllegalStateException("MX_DUPLICATED");
+		}*/
+		
+		repository.save(muestraObj);
+		
+		muestra.getMuestraId().setId(muestraObj.getId());
+		
+		return repositoryInf.save(muestra);
+	}
+	
+	public MxInfluenza updateMuestraInfluenza(MxInfluenza muestra) {
+		
+		Muestra muestraObj = muestra.getMuestraId();
+		
+		Muestra oldMuestra = repository.findById(muestraObj.getId()).orElse(null);
+		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestraObj.getId().toString());		
+		repository.save(muestraObj);
+		
+		MxInfluenza oldMuestraInfluenza = repositoryInf.findById(muestra.getId()).orElse(null);
+		if (oldMuestraInfluenza == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestra.getId().toString());		
 		return repositoryInf.save(muestra);
 	}
 	
@@ -172,13 +302,16 @@ public class MuestraService {
 		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", id.toString());
 		repositoryInf.deleteById(id);
 	}
-
-	public MxInfluenza updateMuestraInfluenza(MxInfluenza muestra) {
-		MxInfluenza oldMuestra = repositoryInf.findById(muestra.getId()).orElse(null);
-		
-		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestra.getId().toString());		
-				
-		return repositoryInf.save(muestra);
+	
+	public List<MxInfluenza> getMuestraInfluenzaByCodigoParticipante(Integer codigoParticipante) {
+		List<MxInfluenza> mxInfluenza = repositoryInf.findByMuestraIdCodigoParticipante(codigoParticipante);
+		if (mxInfluenza.size() <= 0) throw new NotEntityFoundException(MxInfluenza.class.getSimpleName(), "codigo-participante", codigoParticipante.toString());
+		return mxInfluenza;
+	}
+	
+	public MxInfluenza getUltimoRegistroMuestraInfluenzaByCodigo(Integer codigoParticipante) {
+		MxInfluenza mxInfluenza = repositoryInf.findTopByOrderByMuestraIdCodigoParticipanteDesc(codigoParticipante);
+		return mxInfluenza;
 	}
 	
 	/*
@@ -211,6 +344,32 @@ public class MuestraService {
 		if (oldMuestra == null) throw new NotEntityFoundException(Muestra.class.getSimpleName(), "Id", muestra.getId().toString());		
 				
 		return repositoryU01.save(muestra);
+	}
+	
+	/*
+	 * Funcion para verificar si existe una muestra(Influenza, Dengue, BHC, etc) y que no este
+	 * anulada en el dia actual para el codigo ingresado
+	 * */
+	public boolean verificarExisteMuestraMismoCodigoYDia(Muestra muestra) {
+		boolean result = false;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		Date startDate = cal.getTime();
+		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		Date endDate = cal.getTime();
+		
+		long count = repository.countBycodigoParticipanteAndFechaRegistroBetween(muestra.getCodigoParticipante(), startDate, endDate);
+		if (count > 0) {
+			result = true;
+		}
+		
+		return result;
 	}
 	
 }

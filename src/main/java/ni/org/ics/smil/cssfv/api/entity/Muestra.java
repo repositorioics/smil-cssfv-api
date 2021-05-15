@@ -35,7 +35,7 @@ public class Muestra {
 	private Integer codigoParticipante;
 	private Integer codigoCasa;
 	private Long quienOrdena;
-	private Time horaToma;
+	private String horaToma;
 	private String motivoNoMx;
 	private Float volumen;
 	private Boolean mxTomada;
@@ -63,6 +63,10 @@ public class Muestra {
 	@ManyToOne
 	@JoinColumn(name="usuario_id", referencedColumnName = "id")
 	private Usuario usuarioId;
+	
+	@ManyToOne
+	@JoinColumn(name="bioanalista_id", referencedColumnName = "id")
+	private Usuario bioanalistaId;
 	
 	@ManyToOne
 	@JoinColumn(name="mx_id", referencedColumnName = "id")

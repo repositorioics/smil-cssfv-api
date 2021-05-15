@@ -29,6 +29,14 @@ public class CatTipoPruebaService {
 	public List<CatTipoPrueba> getCatTiposPruebas() {
 		return repository.findAll();
 	}
+	
+	public List<CatTipoPrueba> getCatTipoPruebaByIdAndNivel(Long id, Integer nivel) {
+		return repository.findByCatMuestraIdAndNivel(id, nivel);
+	}
+	
+	public List<CatTipoPrueba> getAllTipoPruebasByIdMuestra(Long id) {
+		return repository.findByIdCatMuestraId(id);
+	}
 
 	public CatTipoPrueba getCatTipoPruebaById(Long id) {
 		CatTipoPrueba CatTipoPrueba = repository.findById(id).orElse(null);
@@ -56,6 +64,8 @@ public class CatTipoPruebaService {
 		oldCatTipoPrueba.setNombre(catTipoPrueba.getNombre());
 		oldCatTipoPrueba.setDescripcion(catTipoPrueba.getDescripcion());
 		oldCatTipoPrueba.setActivo(catTipoPrueba.getActivo());
+		oldCatTipoPrueba.setIdCatMuestra(catTipoPrueba.getIdCatMuestra());
+		oldCatTipoPrueba.setNivel(catTipoPrueba.getNivel());
 		return repository.save(oldCatTipoPrueba);
 	}
 }

@@ -37,6 +37,11 @@ public class CatClasificacionController {
     	if (filter == null) return service.getCatClasificaciones();
     	else return service.getCatClasificacionByName(filter);
     }
+    
+    @GetMapping("/catalogos/clasificaciones/activas")
+    public List<CatClasificacion> findAllClasificaciones() {
+    	return service.getAllClasificaciones();
+    }
 
     @PutMapping("/catalogos/clasificaciones")
     public CatClasificacion updateCatClasificacion(@RequestBody CatClasificacion catClasificacion) {

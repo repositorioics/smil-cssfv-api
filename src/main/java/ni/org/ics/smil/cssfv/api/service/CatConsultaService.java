@@ -29,6 +29,10 @@ public class CatConsultaService {
 	public List<CatConsulta> getCatConsultas() {
 		return repository.findAll();
 	}
+	
+	public List<CatConsulta> getAllConsultas() {
+		return repository.findAllConsultasActivas();
+	}
 
 	public CatConsulta getCatConsultaById(Long id) {
 		CatConsulta CatConsulta = repository.findById(id).orElse(null);

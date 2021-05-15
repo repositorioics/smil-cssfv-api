@@ -29,6 +29,10 @@ public class CatTipoMuestraService {
 	public List<CatTipoMuestra> getCatTiposMuestras() {
 		return repository.findAll();
 	}
+	
+	public List<CatTipoMuestra> getTipoMuestrasActivas() {
+		return repository.findAllTipoMuestrasActivas();
+	}
 
 	public CatTipoMuestra getCatTipoMuestraById(Long id) {
 		CatTipoMuestra CatTipoMuestra = repository.findById(id).orElse(null);

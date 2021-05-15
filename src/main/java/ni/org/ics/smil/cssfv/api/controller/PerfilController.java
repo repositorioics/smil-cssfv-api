@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ni.org.ics.smil.cssfv.api.entity.security.Perfil;
@@ -52,9 +53,13 @@ public class PerfilController {
     }
 	
 	/*PerfilOpcionMenu*/
-	@PostMapping("/seguridad/perfilesopcionmenu")
+	/*@PostMapping("/seguridad/perfilesopcionmenu")
 	public PerfilOpcionMenu addPerfilOpcionMenu(@RequestBody PerfilOpcionMenu perfilOpcionMenu) {
 		return perfilOpcionMenuService.savePerfilOpcionMenu(perfilOpcionMenu);
+	}*/
+	@PostMapping("/seguridad/perfilesopcionmenu")
+	public List<PerfilOpcionMenu> addPerfilOpcionMenu(@RequestBody List<PerfilOpcionMenu> perfilOpcionMenu) {
+		return perfilOpcionMenuService.savePerfilesOpcionesMenu(perfilOpcionMenu);
 	}
 	
 	@GetMapping("/seguridad/perfilesopcionmenu")
@@ -72,9 +77,14 @@ public class PerfilController {
         return perfilOpcionMenuService.updatePerfilOpcionMenu(perfilOpcionMenu);
     }
 	
+	@GetMapping("/seguridad/perfilesopcionmenu/byperfil/{id}")
+    public List<PerfilOpcionMenu> getPerfilOpcionMenuByPerfilId(@PathVariable int id) {
+        return perfilOpcionMenuService.getPerfilOpcionMenuByPerfilId(id);
+    }
+	
 	/*PerfilUsuario*/
 	@PostMapping("/seguridad/perfilesusuario")
-	public PerfilUsuario addPerfilUsuario(@RequestBody PerfilUsuario perfilUsuario) {
+	public List<PerfilUsuario> addPerfilUsuario(@RequestBody List<PerfilUsuario> perfilUsuario) {
 		return perfilUsuarioService.savePerfilUsuario(perfilUsuario);
 	}
 	
@@ -91,5 +101,10 @@ public class PerfilController {
     @PutMapping("/seguridad/perfilesusuario")
     public PerfilUsuario updatePerfilOpcionMenu(@RequestBody PerfilUsuario perfilUsuario) {
         return perfilUsuarioService.updatePerfilUsuario(perfilUsuario);
+    }
+    
+    @GetMapping("/seguridad/perfilesusuario/perfil")
+    public List<PerfilUsuario> getPerfilUsuarioByNombre(@RequestParam String nombre) {
+    	return perfilUsuarioService.getPerfilUsuarioByNombre(nombre);
     }
 }

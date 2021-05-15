@@ -1,5 +1,6 @@
 package ni.org.ics.smil.cssfv.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,37 @@ public class SegPerfilOpcionMenuService {
 	}
 
 	public List<PerfilOpcionMenu> savePerfilesOpcionesMenu(List<PerfilOpcionMenu> perfilOpcionMenus) {
-		return repository.saveAll(perfilOpcionMenus);
+		List<PerfilOpcionMenu> opcionesMenus = new ArrayList<>();
+		
+		for (PerfilOpcionMenu perfilOpcionMenu : perfilOpcionMenus) {
+			
+			if (perfilOpcionMenu.isActivo() == true) {
+				
+				PerfilOpcionMenu verifExist = null;
+				verifExist = repository.findByPerfilIdIdAndOpcionMenuIdId(perfilOpcionMenu.getPerfilId().getId(), perfilOpcionMenu.getOpcionMenuId().getId());
+				
+				if (verifExist == null) {
+					PerfilOpcionMenu newPerfilOpcionMenu = new PerfilOpcionMenu();
+					
+					newPerfilOpcionMenu.setPerfilId(perfilOpcionMenu.getPerfilId());
+					newPerfilOpcionMenu.setOpcionMenuId(perfilOpcionMenu.getOpcionMenuId());
+					newPerfilOpcionMenu.setActivo(perfilOpcionMenu.isActivo());
+					
+					opcionesMenus.add(newPerfilOpcionMenu);
+				} else {
+					verifExist.setActivo(true);
+					repository.save(verifExist);
+				}
+			} else {
+				PerfilOpcionMenu oldData = null;
+				oldData = repository.findByPerfilIdIdAndOpcionMenuIdId(perfilOpcionMenu.getPerfilId().getId(), perfilOpcionMenu.getOpcionMenuId().getId());
+				if (oldData != null) {
+					oldData.setActivo(false);
+					repository.save(oldData);
+				}
+			}
+		}
+		return repository.saveAll(opcionesMenus);
 	}
 
 	public List<PerfilOpcionMenu> getPerfilesOpcionesMenu() {
@@ -49,5 +80,9 @@ public class SegPerfilOpcionMenuService {
 		
 		oldPerfilOpcionMenu.setActivo(perfilOpcionMenu.isActivo());
 		return repository.save(oldPerfilOpcionMenu);
+	}
+	
+	public List<PerfilOpcionMenu> getPerfilOpcionMenuByPerfilId(int id) {
+		return repository.findByPerfilIdId(id);
 	}
 }
