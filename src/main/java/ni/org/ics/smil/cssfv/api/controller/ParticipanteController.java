@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import ni.org.ics.smil.cssfv.api.entity.ParticipanteView;
+import ni.org.ics.smil.cssfv.api.entity.view.ParticipanteView;
 import ni.org.ics.smil.cssfv.api.service.ParticipanteViewService;
 
 @RestController

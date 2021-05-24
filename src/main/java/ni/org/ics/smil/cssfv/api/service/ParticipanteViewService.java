@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ni.org.ics.smil.cssfv.api.entity.ParticipanteView;
+import ni.org.ics.smil.cssfv.api.entity.view.ParticipanteView;
 import ni.org.ics.smil.cssfv.api.repository.ParticipanteViewRepository;
 
 @Service

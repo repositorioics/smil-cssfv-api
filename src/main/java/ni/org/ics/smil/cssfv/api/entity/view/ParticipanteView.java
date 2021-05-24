@@ -1,4 +1,4 @@
-package ni.org.ics.smil.cssfv.api.entity;
+package ni.org.ics.smil.cssfv.api.entity.view;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
