@@ -49,6 +49,7 @@ public class SegMenuService {
 		
 		oldMenu.setNombre(menu.getNombre());
 		oldMenu.setDescripcion(menu.getDescripcion());
+		oldMenu.setIcono(menu.getIcono());
 		oldMenu.setActivo(menu.isActivo());
 		oldMenu.setOrden(menu.getOrden());
 		return repository.save(oldMenu);

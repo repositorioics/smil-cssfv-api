@@ -33,6 +33,7 @@ public class OpcionMenu {
 	private String nombre;
 	private String descripcion;
 	private String url;
+	private String icono;
 	private boolean activo;
 	private int orden;
 	private boolean visible;

@@ -24,6 +24,7 @@ public class Menu {
 	private int id;
 	private String nombre;
 	private String descripcion;
+	private String icono;
 	private boolean activo;
 	private int orden;
 }

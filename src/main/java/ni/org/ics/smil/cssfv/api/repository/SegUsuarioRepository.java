@@ -7,5 +7,5 @@ import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 
 public interface SegUsuarioRepository extends RevisionRepository<Usuario, Integer, Integer>, JpaRepository<Usuario, Integer>{
 
-	Usuario findByUsuario(String usuario); 
+	Usuario findByUsuario(String usuario);
 }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Immutable
 @Subselect(
-		"select om.id as id, usuario.usuario as Usuario, perfil.nombre as Perfil, menu.id as MenuId, menu.nombre as Menu, om.id as SubMenuId, om.nombre as SubMenu, om.url as Url "
+		"select om.id as id, usuario.usuario as Usuario, perfil.nombre as Perfil, menu.id as MenuId, menu.nombre as Menu, menu.icono as IconoMenu, om.id as SubMenuId, om.nombre as SubMenu, om.url as Url, om.icono as IconoSubMenu "
 		+"from seg_usuario usuario, seg_perfil perfil, seg_perfil_usuario pu, seg_menu menu, seg_opciones_menu om, seg_perfiles_opcion_menu pom "
 		+"where usuario.id  = pu.seg_usuario_id and "
 		+"perfil.id = pu.seg_perfil_id and "
@@ -34,8 +34,10 @@ public class UsuarioMenuView {
 	private String perfil;
 	private Long menuid;
 	private String menu;
+	private String iconomenu;
 	private Long submenuid;
 	private String submenu;
 	private String url;
+	private String iconosubmenu;
 	
 }

@@ -52,6 +52,7 @@ public class SegOpcionMenuService {
 		oldOpcionMenu.setActivo(opcionMenu.isActivo());
 		oldOpcionMenu.setOrden(opcionMenu.getOrden());
 		oldOpcionMenu.setUrl(opcionMenu.getUrl());
+		oldOpcionMenu.setIcono(opcionMenu.getIcono());
 		oldOpcionMenu.setVisible(opcionMenu.isVisible());
 		return repository.save(oldOpcionMenu);
 	}
