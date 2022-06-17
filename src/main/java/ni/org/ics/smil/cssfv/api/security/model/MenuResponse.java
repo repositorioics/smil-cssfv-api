@@ -8,6 +8,7 @@ import lombok.Data;
 public class MenuResponse {
 	
 	private String usuario;
+	private Integer usuarioId;
 	//private String perfil;
 	private List<MenuDTO> menus;
 	

@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ni.org.ics.smil.cssfv.api.entity.catalogs.CatResultadosMuestras;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMismoEpfebril;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoMuestra;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoPrueba;
 
@@ -42,6 +42,10 @@ public class MxInfluenza {
 	@JoinColumn(name="tipo_muestra_id", referencedColumnName = "id")
 	private CatTipoMuestra tipoMuestraId;
 	
+	@ManyToOne
+	@JoinColumn(name="motivo_mismo_ef", referencedColumnName = "id")
+	private CatMismoEpfebril motivoMismoEf;
+	
 	/*@ManyToOne
 	@JoinColumn(name="resultado_pr_id", referencedColumnName = "id")
 	private CatResultadosMuestras resultadoPrId;*/
@@ -52,7 +56,7 @@ public class MxInfluenza {
 	private Boolean pruebaRapidaVsr;
 	private String codLab;
 	private Boolean mxNoTomada;
-	private String motivoMismoEf;
+	//private String motivoMismoEf;
 	private String motivoSinFif;
 	private Long perteneceEstTransm;
 	private Long casoIndiceEstTransm;

@@ -19,8 +19,10 @@ import lombok.NoArgsConstructor;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCambioCategoria;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCategoria;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatConsulta;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMismoEpfebril;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTipoPrueba;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatTubo;
+import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 
 @Data
 @AllArgsConstructor
@@ -57,6 +59,14 @@ public class MxDengue {
 	@JoinColumn(name="cambio_categoria_id", referencedColumnName = "id")
 	private CatCambioCategoria cambioCategoriaId;
 	
+	@ManyToOne
+	@JoinColumn(name="bioanalista_vial_id", referencedColumnName = "id")
+	private Usuario bioanalistaVialId;
+	
+	@ManyToOne
+	@JoinColumn(name="motivo_mismo_ef", referencedColumnName = "id")
+	private CatMismoEpfebril motivoMismoEf;
+	
 	private Boolean retoma;
 	private Boolean completarVol;
 	private Boolean pruebaRapida;
@@ -64,16 +74,24 @@ public class MxDengue {
 	private Boolean mxPapelFiltroEnviada;
 	private Boolean mxSeparada;
 	private String codLab;
+	private String codLabScan;
 	private Boolean mxNoTomada;
 	private Integer anioEstSegunFif;
-	private Time horaRefrigeracion;
+	private String horaRefrigeracion;
 	@Temporal(TemporalType.DATE)
 	private Date fechaSeparacion;
-	private Time horaSeparacion;
+	private String horaSeparacion;
 	private Integer numViales;
 	private Float volumenSuero;
-	private Time horaRefrigeracionVial;
+	private String horaRefrigeracionVial;
 	private Integer numeroPruebas;
 	private String resultado;
+	private String observacionMxSeparada;
+	private Boolean procInmediato;
+	private String observacionPrRapida;
+	private Boolean positvoZika;
+	private Boolean orina;
+	private Boolean saliva;
+	//private String motivoMismoEf;
 	//private Time tiempoProcesamiento;
 }

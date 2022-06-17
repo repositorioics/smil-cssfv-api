@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ni.org.ics.smil.cssfv.api.entity.security.Menu;
 import ni.org.ics.smil.cssfv.api.entity.security.OpcionMenu;
-import ni.org.ics.smil.cssfv.api.entity.security.Perfil;
 import ni.org.ics.smil.cssfv.api.entity.view.UsuarioMenuView;
 import ni.org.ics.smil.cssfv.api.security.model.MenuDTO;
 import ni.org.ics.smil.cssfv.api.security.model.MenuResponse;
@@ -81,6 +80,7 @@ public class MenuController {
     	MenuResponse menuResponse = new MenuResponse();
         List<UsuarioMenuView> usuarioMenu = usuarioMenuService.getMenuByUsuario(usuario);
         menuResponse.setUsuario(usuario);
+        menuResponse.setUsuarioId(usuarioMenu.get(0).getUsuarioid());
         Long idMenu = 0L;
         List<MenuDTO> menus = new ArrayList<MenuDTO>();
         List<SubMenuDTO> subMenus = new ArrayList<SubMenuDTO>();

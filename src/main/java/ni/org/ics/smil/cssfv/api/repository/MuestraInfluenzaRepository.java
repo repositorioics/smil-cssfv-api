@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ni.org.ics.smil.cssfv.api.entity.MxBhc;
 import ni.org.ics.smil.cssfv.api.entity.MxInfluenza;
-import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 
 public interface MuestraInfluenzaRepository extends JpaRepository<MxInfluenza, Long> {
 	
@@ -33,4 +31,20 @@ public interface MuestraInfluenzaRepository extends JpaRepository<MxInfluenza, L
 			+ "ORDER BY b.fecha_toma DESC LIMIT 1", nativeQuery=true)
 	MxInfluenza findTopByOrderByMuestraIdCodigoParticipanteDesc(
 			@Param("codigoParticipante") Integer codigoParticipante);
+	
+	@Query(value="SELECT * from mx_influenza a, muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.mx_id = :id "
+			+ "AND b.mx_enviada = false "
+			+ "AND b.anulada = false", nativeQuery=true)
+	List<MxInfluenza> getMuestrasInfluenzaPendientesEnvio(
+			@Param("id") Long id);
+	
+	@Query(value="SELECT a.cod_lab "
+			+ "FROM mx_influenza a, muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.codigo_participante = :codigo "
+			+ "ORDER BY a.id DESC limit 1", nativeQuery=true)
+	String findMxInfluenzaByCode(
+			@Param("codigo") Integer codigo);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCategoria;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatClasificacion;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.CatCategoriaRepository;
 
@@ -28,6 +29,10 @@ public class CatCategoriaService {
 
 	public List<CatCategoria> getCatCategorias() {
 		return repository.findAll();
+	}
+	
+	public List<CatCategoria> getAllCategorias() {
+		return repository.findAllCategoriasActivas();
 	}
 
 	public CatCategoria getCatCategoriaById(Long id) {

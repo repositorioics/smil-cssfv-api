@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCambioCategoria;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCategoria;
 import ni.org.ics.smil.cssfv.api.service.CatCambioCategoriaService;
 
 @RestController
@@ -36,6 +37,11 @@ public class CatCambioCategoriaController {
     public List<CatCambioCategoria> findCatCambioCategoria(@RequestParam(required = false) String filter) {
     	if (filter == null) return service.getCatCambioCategorias();
     	else return service.getCatCambioCategoriaByName(filter);
+    }
+    
+    @GetMapping("/catalogos/cambio-categorias/activas")
+    public List<CatCambioCategoria> findAllCambioCategorias() {
+    	return service.getAllCambioCategorias();
     }
 
     @PutMapping("/catalogos/cambio-categorias")

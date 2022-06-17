@@ -1,6 +1,6 @@
 package ni.org.ics.smil.cssfv.api.entity;
 
-import java.sql.Time;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMotivoAnulacion;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMuestra;
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatRecepcion;
 import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 
 @Data
@@ -47,7 +48,10 @@ public class Muestra {
 	private Long usuarioAnulacion;
 	private Boolean mxCompartida;
 	private String estudiosParticipante;
-
+	private String horaEnvio;
+	private Integer viaje;
+	private BigDecimal tempEnvio;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fechaToma;	
 	
@@ -59,6 +63,9 @@ public class Muestra {
 	
 	@Temporal(TemporalType.DATE)
 	private Date fif;
+	
+	@Temporal(TemporalType.DATE)
+	private Date fechaEnvio;	
 
 	@ManyToOne
 	@JoinColumn(name="usuario_id", referencedColumnName = "id")
@@ -75,5 +82,17 @@ public class Muestra {
 	@ManyToOne
 	@JoinColumn(name="motivo_anulacion_id", referencedColumnName = "id")
 	private CatMotivoAnulacion motivoAnulacionId;
+	
+	@ManyToOne
+	@JoinColumn(name="cat_recepcion_id", referencedColumnName = "id")
+	private CatRecepcion catRecepcionId;
+	
+	@ManyToOne
+	@JoinColumn(name="usuario_recepciona_id", referencedColumnName = "id")
+	private Usuario usuarioRecepciona;
+	
+	@ManyToOne
+	@JoinColumn(name="bioanalista_envia", referencedColumnName = "id")
+	private Usuario bioanalistaEnvia;
 	
 }

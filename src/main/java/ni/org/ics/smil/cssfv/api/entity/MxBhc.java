@@ -44,4 +44,5 @@ public class MxBhc {
 	
 	@Column(precision=4, scale=2) 
 	private Float volumenVial;
+	private String codLab;
 }

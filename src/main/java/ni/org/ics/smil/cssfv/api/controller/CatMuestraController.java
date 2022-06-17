@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCategoria;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMuestra;
 import ni.org.ics.smil.cssfv.api.service.CatMuestraService;
 
@@ -48,4 +49,10 @@ public class CatMuestraController {
         service.deleteCatMuestra(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/catalogos/muestras/activas")
+    public List<CatMuestra> findAllCatMuestras() {
+    	return service.getAllCatMuestras();
+    }
+
 }

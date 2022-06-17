@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ni.org.ics.smil.cssfv.api.entity.security.PerfilUsuario;
 import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.SegUsuarioRepository;

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatClasificacion;
-import ni.org.ics.smil.cssfv.api.entity.catalogs.CatConsulta;
 
 /**
  * Created by Miguel Salinas on 14/12/2020.

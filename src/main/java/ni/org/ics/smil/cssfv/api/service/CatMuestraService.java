@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ni.org.ics.smil.cssfv.api.entity.catalogs.CatCategoria;
 import ni.org.ics.smil.cssfv.api.entity.catalogs.CatMuestra;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.CatMuestraRepository;
@@ -28,6 +29,10 @@ public class CatMuestraService {
 
 	public List<CatMuestra> getCatMuestras() {
 		return repository.findAll();
+	}
+	
+	public List<CatMuestra> getAllCatMuestras() {
+		return repository.findAllCatMuestrasActivas();
 	}
 
 	public CatMuestra getCatMuestraById(Long id) {
