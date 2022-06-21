@@ -304,6 +304,10 @@ public class MuestraService {
 		return repositoryBhc.findMxBHCByCode(codigo);
 	}
 	
+	public MxBhc muestraBHCByCodLabScan(String codLabScan) {
+		return repositoryBhc.findMxBHCByCodLabScan(codLabScan);
+	}
+	
 	
 	/*
 	 * Tabla de muestras Dengue
@@ -575,6 +579,10 @@ public class MuestraService {
 		return repositoryDengue.findMxDengueHematicaByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
+	public MxDengue muestraMxDengueByCodeLabScan(String codeLabScan) {
+		return repositoryDengue.findMxDengueByCodLabScan(codeLabScan);
+	}
+	
 	/*
 	 * Tabla de muestras Influenza
 	 * */
@@ -718,6 +726,10 @@ public class MuestraService {
 		return repositoryInf.findMxInfluenzaByCode(codigo);
 	}
 	
+	public MxInfluenza muestraInfluenzaByCodLabScan(String codLabScan) {
+		return repositoryInf.findMxInfluenzaByCodLabScan(codLabScan);
+	}
+	
 	/*
 	 * Tabla de muestras U01
 	 * */
@@ -856,6 +868,10 @@ public class MuestraService {
 	
 	public String ultimaMuestraUO1ByCode(Integer codigo) {
 		return repositoryU01.findMxUO1ByCode(codigo);
+	}
+	
+	public MxU01 muestraU01ByCodeLabScan(String codLabScan) {
+		return repositoryU01.findMxU01ByCodLabScan(codLabScan);
 	}
 
 	/*
@@ -998,6 +1014,10 @@ public class MuestraService {
 	
 	public String ultimaMuestraTransmisionByCode(Integer codigo) {
 		return repositoryTransmision.findMxTransmisionByCode(codigo);
+	}
+	
+	public MxTransmision muestraTransmisionByCodLabScan(String codLabScan) {
+		return repositoryTransmision.findMxTransmisionByCodLabScan(codLabScan);
 	}
 	
 	/*

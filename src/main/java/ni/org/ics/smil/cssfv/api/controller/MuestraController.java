@@ -146,6 +146,11 @@ public class MuestraController {
 		return service.ultimaMuestraBHCByCode(codigo);
 	}
 	
+	@GetMapping("/muestras/bhc/cod_lab_scan")
+	public MxBhc getMxBHCByCodLabScan(String codLabScan) {
+		return service.muestraBHCByCodLabScan(codLabScan);
+	}
+	
 	/*Dengue*/
 	@GetMapping("/muestras/dengue")
 	public List<MxDengue> getMuestrasDengue() {
@@ -263,6 +268,11 @@ public class MuestraController {
 		return service.ultimaMxDengueHematicaByCode(codigo);
 	}
 	
+	@GetMapping("/muestras/dengue/cod_lab_scan")
+	private MxDengue getMxDengueByCodLabScan(String codLabScan) {
+		return service.muestraMxDengueByCodeLabScan(codLabScan);
+	}
+	
 	/*Influenza*/
 	@GetMapping("/muestras/influenza")
 	public List<MxInfluenza> getMuestrasInfluenza() {
@@ -314,6 +324,11 @@ public class MuestraController {
 		return service.ultimaMuestraInfluenzaByCode(codigo);
 	}
 	
+	@GetMapping("/muestras/influenza/cod_lab_scan")
+	public MxInfluenza getMxInfluenzaByCodLabScan(String codLabScan) {
+		return service.muestraInfluenzaByCodLabScan(codLabScan);
+	}
+	
 	/*U01*/
 	@GetMapping("/muestras/u01")
 	public List<MxU01> getMuestrasU01() {
@@ -355,6 +370,11 @@ public class MuestraController {
 		return service.ultimaMuestraUO1ByCode(codigo);
 	}
 	
+	@GetMapping("/muestras/u01/cod_lab_scan")
+	public MxU01 getMxUO1ByCodLabScan(String codLabScan) {
+		return service.muestraU01ByCodeLabScan(codLabScan);
+	}
+	
 	/*Transmision*/
 	@GetMapping("/muestras/transmision")
 	public List<MxTransmision> getMuestrasTR(@RequestParam Long idMx) {
@@ -394,5 +414,10 @@ public class MuestraController {
 	@GetMapping("/muestras/transmision/ultimo/code_lab")
 	public String getLastMxTransmisionByCode(@RequestParam Integer codigo) {
 		return service.ultimaMuestraTransmisionByCode(codigo);
+	}
+	
+	@GetMapping("/muestras/transmision/cod_lab_scan")
+	public MxTransmision getMxTransmisionByCodLabScan(String codLabScan) {
+		return service.muestraTransmisionByCodLabScan(codLabScan);
 	}
 }

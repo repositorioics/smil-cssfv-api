@@ -250,6 +250,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 3 "
 			+ "OR b.cat_recepcion_id = 4 "
 			+ "OR b.cat_recepcion_id = 5 "
@@ -266,6 +267,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 11 "
 			+ "OR b.cat_recepcion_id = 12 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
@@ -278,6 +280,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 9 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
 	String findCodLabDenguePBMCByCode(@Param("codigo") Integer codigo,
@@ -289,6 +292,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 10 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
 	String findCodLabDenguePaxGeneByCode(@Param("codigo") Integer codigo,
@@ -301,6 +305,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 2 "
 			+ "OR b.cat_recepcion_id = 43 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
@@ -314,6 +319,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 3 "
 			+ "OR b.cat_recepcion_id = 4 "
 			+ "OR b.cat_recepcion_id = 5 "
@@ -330,6 +336,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 11 "
 			+ "OR b.cat_recepcion_id = 12 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
@@ -342,6 +349,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 9 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
 	MxDengue findMxDenguePBMCByCode(@Param("codigo") Integer codigo,
@@ -353,6 +361,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 10 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
 	MxDengue findMxDenguePaxGeneByCode(@Param("codigo") Integer codigo,
@@ -365,10 +374,17 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.codigo_participante = :codigo "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
 			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false "
 			+ "AND b.cat_recepcion_id = 2 "
 			+ "OR b.cat_recepcion_id = 43 "
 			+ "ORDER BY a.id DESC limit 1 ", nativeQuery=true)
 	MxDengue findMxDengueHematicaByCode(@Param("codigo") Integer codigo,
 			@Param("startDate") Date startDate,
 			@Param("endDate") Date endDate);
+	
+	@Query(value="SELECT * FROM mx_dengue a, muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.anulada = false "
+			+ "AND a.cod_lab_scan = :codLabScan", nativeQuery=true)
+	MxDengue findMxDengueByCodLabScan(String codLabScan); 
 }
