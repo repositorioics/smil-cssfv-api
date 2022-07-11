@@ -26,4 +26,14 @@ public interface MuestraRepository extends JpaRepository<Muestra, Long> {
 	@Query(value = "SELECT * FROM muestras "
 			+ "ORDER BY fecha_registro DESC LIMIT 7", nativeQuery=true)
 	List<Muestra> findTopMuestras();
+	
+	/*Obtener el registro by cod_lab_scan*/
+	@Query(value = "SELECT * FROM muestras a "
+			+ "WHERE a.cod_lab_scan = :codLabScan", nativeQuery=true)
+	Muestra findMxByCodLabScan(@Param("codLabScan") String codLabScan);
+	
+	/*Obtener el registro by cod_lab*/
+	@Query(value = "SELECT * FROM muestras a "
+			+ "WHERE a.cod_lab = :codLab", nativeQuery=true)
+	Muestra findMxByCodLab(@Param("codLab") String codLab);
 }

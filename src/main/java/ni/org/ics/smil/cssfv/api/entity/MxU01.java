@@ -47,10 +47,10 @@ public class MxU01 {
 	@JoinColumn(name="clasificacion_id", referencedColumnName = "id")
 	private CatClasificacion clasificacionId;
 	
-	private String codLabScan;
+	//private String codLabScan;
 	private String codLabMi;
 	private String motivoSinFif;
-	private String codLab;
+	//private String codLab;
 	private Boolean mxNoTomada;
 	private String horaRefrigeracion;
 	private Integer viaje;

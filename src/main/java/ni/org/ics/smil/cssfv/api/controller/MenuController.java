@@ -82,6 +82,7 @@ public class MenuController {
         menuResponse.setUsuario(usuario);
         menuResponse.setUsuarioId(usuarioMenu.get(0).getUsuarioid());
         Long idMenu = 0L;
+        Long idSubMenu = 0L;
         List<MenuDTO> menus = new ArrayList<MenuDTO>();
         List<SubMenuDTO> subMenus = new ArrayList<SubMenuDTO>();
         int i = 0, j = usuarioMenu.size();
@@ -104,14 +105,22 @@ public class MenuController {
         		subMenus = new ArrayList<SubMenuDTO>();
         		//agregar elemento a la nueva lista
         		SubMenuDTO subMenu = new SubMenuDTO(menuView.getSubmenuid(), menuView.getSubmenu(), menuView.getUrl(), menuView.getIconosubmenu());
-            	subMenus.add(subMenu);
+        		if (idSubMenu != subMenu.getId()) {
+        			idSubMenu = subMenu.getId();
+        			subMenus.add(subMenu);
+        		}
+            	//subMenus.add(subMenu);
             	if (i == j - 1) { // es el ultimo elemento, agregar menu padre nuevo
             		menus.add(new MenuDTO(menuView.getMenuid(), menuView.getMenu(), menuView.getIconomenu(), subMenus));
         		}
         	} else {
         		//es el mismo menu padre, solo agregar el submenu
         		SubMenuDTO subMenu = new SubMenuDTO(menuView.getSubmenuid(), menuView.getSubmenu(), menuView.getUrl(), menuView.getIconosubmenu());
-            	subMenus.add(subMenu);
+        		if (idSubMenu != subMenu.getId()) {
+        			idSubMenu = subMenu.getId();
+        			subMenus.add(subMenu);
+        		}
+            	//subMenus.add(subMenu);
         		if (i == j - 1) { // es el ultimo elemento, agregar menu padre
         			menus.add(new MenuDTO(menuAnterior.getMenuid(), menuAnterior.getMenu(), menuAnterior.getIconomenu(), subMenus));
         		}        			

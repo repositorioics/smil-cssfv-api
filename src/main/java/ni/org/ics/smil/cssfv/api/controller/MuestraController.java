@@ -86,6 +86,16 @@ public class MuestraController {
 		return service.getMuestrasPorEstudios();
 	}
 	
+	@GetMapping("/muestras/codLabScan")
+	public Muestra mxByCodLabScan(@RequestParam String codLabScan) {
+		return service.getMxByCodLabScan(codLabScan);
+	}
+	
+	@GetMapping("/muestras/codLab")
+	public Muestra mxByCodLab(@RequestParam String codLab) {
+		return service.getMxByCodLab(codLab);
+	}
+	
 	/*BHC*/
 	@GetMapping("/muestras/bhc")
 	public List<MxBhc> getMuestrasBhc() {
@@ -155,6 +165,11 @@ public class MuestraController {
 	@GetMapping("/muestras/dengue")
 	public List<MxDengue> getMuestrasDengue() {
 		return service.getMuestrasDengue();
+	}
+	
+	@GetMapping("/muestras/dengue/rango-fecha")
+	public List<MxDengue> getAllMuestrasDengue(@RequestParam String strFecha1, @RequestParam String strFecha2) throws ParseException {
+		return service.getAllMuestrasDengueByRangeDate(strFecha1, strFecha2);
 	}
 	
 	@GetMapping("/muestras/dengue/{id}")
@@ -269,8 +284,13 @@ public class MuestraController {
 	}
 	
 	@GetMapping("/muestras/dengue/cod_lab_scan")
-	private MxDengue getMxDengueByCodLabScan(String codLabScan) {
+	public MxDengue getMxDengueByCodLabScan(String codLabScan) {
 		return service.muestraMxDengueByCodeLabScan(codLabScan);
+	}
+	
+	@GetMapping("/muestras/dengue/candidatos/pbmc")
+	public List<MxDengue> getMxDengueCandidatosPbmc() {
+		return service.muestrasMxDengueCandidatosPbmc();
 	}
 	
 	/*Influenza*/

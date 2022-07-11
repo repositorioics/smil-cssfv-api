@@ -54,10 +54,10 @@ public class MxTransmision {
 	@JoinColumn(name="consulta_id", referencedColumnName = "id") 
 	private CatTipoMuestra consultaId;
 	
-	private String codLabScan;
-	private String codLabMi;
+	//private String codLabScan;
+	//private String codLabMi;
 	private String motivoSinFif;
-	private String codLab;
+	//private String codLab;
 	private Boolean mxNoTomada;
 	private String horaRefrigeracion;
 	private Integer viaje;

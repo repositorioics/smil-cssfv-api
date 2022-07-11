@@ -50,11 +50,11 @@ public class MxInfluenza {
 	@JoinColumn(name="resultado_pr_id", referencedColumnName = "id")
 	private CatResultadosMuestras resultadoPrId;*/
 	
-	private String codLabScan;
+	//private String codLabScan;
 	private Boolean retoma;
 	private Boolean pruebaRapida;
 	private Boolean pruebaRapidaVsr;
-	private String codLab;
+	//private String codLab;
 	private Boolean mxNoTomada;
 	//private String motivoMismoEf;
 	private String motivoSinFif;

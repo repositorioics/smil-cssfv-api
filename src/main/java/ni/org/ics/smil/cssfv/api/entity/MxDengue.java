@@ -73,8 +73,8 @@ public class MxDengue {
 	private Boolean mxPapelFiltro;
 	private Boolean mxPapelFiltroEnviada;
 	private Boolean mxSeparada;
-	private String codLab;
-	private String codLabScan;
+	//private String codLab;
+	//private String codLabScan;
 	private Boolean mxNoTomada;
 	private Integer anioEstSegunFif;
 	private String horaRefrigeracion;
@@ -89,7 +89,7 @@ public class MxDengue {
 	private String observacionMxSeparada;
 	private Boolean procInmediato;
 	private String observacionPrRapida;
-	private Boolean positvoZika;
+	private Boolean positivoZika;
 	private Boolean orina;
 	private Boolean saliva;
 	//private String motivoMismoEf;

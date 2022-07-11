@@ -6,11 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ni.org.ics.smil.cssfv.api.entity.security.Usuario;
 
 /**
 Created by SC on 30/03/2022.
@@ -27,7 +30,7 @@ public class CatRecepcion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long estudio;
-	private String tipo;
+	//private String tipo;
 	private String descripcion;
 	private String criteriosEvaluar;
 	private String cadenaCaracteresCodigo;
@@ -35,4 +38,8 @@ public class CatRecepcion {
 	private String expresionRegular;
 	private Boolean activo;
 	private String nombreEstudio;
+	
+	@ManyToOne
+	@JoinColumn(name="cat_tipo_muestra_id", referencedColumnName = "id")
+	private CatTipoMuestra catTipoMuestraId;
 }

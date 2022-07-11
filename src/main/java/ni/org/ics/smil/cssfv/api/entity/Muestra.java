@@ -51,6 +51,8 @@ public class Muestra {
 	private String horaEnvio;
 	private Integer viaje;
 	private BigDecimal tempEnvio;
+	private String codLab;
+	private String codLabScan;
 	
 	@Temporal(TemporalType.DATE)
 	private Date fechaToma;	

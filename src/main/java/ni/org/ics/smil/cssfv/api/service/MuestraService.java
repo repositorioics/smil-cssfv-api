@@ -119,6 +119,14 @@ public class MuestraService {
 		return repository.save(oldMuestra);
 	}
 	
+	public Muestra getMxByCodLabScan(String codLabScan) {
+		return repository.findMxByCodLabScan(codLabScan);
+	}
+	
+	public Muestra getMxByCodLab(String codLab) {
+		return repository.findMxByCodLab(codLab);
+	}
+	
 	public List<Muestra> envioMuestras(List<Muestra> muestra) {
 		for (Muestra envioMx : muestra) {
 			Muestra muestraById = repository.findById(envioMx.getId()).orElse(null);
@@ -301,11 +309,13 @@ public class MuestraService {
 	}
 	
 	public String ultimaMuestraBHCByCode(Integer codigo) {
-		return repositoryBhc.findMxBHCByCode(codigo);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryBhc.findMxBHCByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	public MxBhc muestraBHCByCodLabScan(String codLabScan) {
-		return repositoryBhc.findMxBHCByCodLabScan(codLabScan);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryBhc.findMxBHCByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	
@@ -316,6 +326,30 @@ public class MuestraService {
         return repositoryDengue.findAll();
     }
 	
+	public List<MxDengue> getAllMuestrasDengueByRangeDate(String fecha1, String fecha2) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date startDate = sdf.parse(fecha1);
+		Date endDate = sdf.parse(fecha2);
+
+		Calendar cal = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+
+		cal.setTime(startDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		cal2.setTime(endDate);
+		cal2.set(Calendar.HOUR_OF_DAY, 23);
+		cal2.set(Calendar.MINUTE, 59);
+		cal2.set(Calendar.SECOND, 59);
+
+		Date dFecha1 = cal.getTime();
+
+		Date dFecha2 = cal2.getTime();
+		return repositoryDengue.findAllMuestrasDengueFechaRegistroBetween(dFecha1, dFecha2);
+	}
 	public List<MxDengue> getMuestraDengueByCodigoParticipante(Integer codigoParticipante) {
 		List<MxDengue> mxDengue = repositoryDengue.findMuestrasDengueByCodigoParticipante(codigoParticipante);
 		if (mxDengue.size() <= 0) throw new NotEntityFoundException(MxBhc.class.getSimpleName(), "codigo-participante", codigoParticipante.toString());
@@ -583,6 +617,9 @@ public class MuestraService {
 		return repositoryDengue.findMxDengueByCodLabScan(codeLabScan);
 	}
 	
+	public List<MxDengue> muestrasMxDengueCandidatosPbmc() {
+		return repositoryDengue.findMuestrasDengueCandidatosPbmc();
+	}
 	/*
 	 * Tabla de muestras Influenza
 	 * */
@@ -723,11 +760,13 @@ public class MuestraService {
 	}
 	
 	public String ultimaMuestraInfluenzaByCode(Integer codigo) {
-		return repositoryInf.findMxInfluenzaByCode(codigo);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryInf.findMxInfluenzaByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	public MxInfluenza muestraInfluenzaByCodLabScan(String codLabScan) {
-		return repositoryInf.findMxInfluenzaByCodLabScan(codLabScan);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryInf.findMxInfluenzaByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	/*
@@ -867,11 +906,13 @@ public class MuestraService {
 	}
 	
 	public String ultimaMuestraUO1ByCode(Integer codigo) {
-		return repositoryU01.findMxUO1ByCode(codigo);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryU01.findMxUO1ByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	public MxU01 muestraU01ByCodeLabScan(String codLabScan) {
-		return repositoryU01.findMxU01ByCodLabScan(codLabScan);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryU01.findMxU01ByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 
 	/*
@@ -1013,11 +1054,13 @@ public class MuestraService {
 	}
 	
 	public String ultimaMuestraTransmisionByCode(Integer codigo) {
-		return repositoryTransmision.findMxTransmisionByCode(codigo);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryTransmision.findMxTransmisionByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	public MxTransmision muestraTransmisionByCodLabScan(String codLabScan) {
-		return repositoryTransmision.findMxTransmisionByCodLabScan(codLabScan);
+		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
+		return repositoryTransmision.findMxTransmisionByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
 	}
 	
 	/*

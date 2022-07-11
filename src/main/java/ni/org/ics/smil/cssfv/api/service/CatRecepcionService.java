@@ -58,7 +58,7 @@ public class CatRecepcionService {
 		if (oldCatRecepcion == null) throw new NotEntityFoundException(CatRecepcion.class.getSimpleName(), "Id", catRecepcion.getId().toString());
 		
 		oldCatRecepcion.setEstudio(catRecepcion.getEstudio());
-		oldCatRecepcion.setTipo(catRecepcion.getTipo());
+		oldCatRecepcion.setCatTipoMuestraId(catRecepcion.getCatTipoMuestraId());
 		oldCatRecepcion.setDescripcion(catRecepcion.getDescripcion());
 		oldCatRecepcion.setCriteriosEvaluar(catRecepcion.getCriteriosEvaluar());
 		oldCatRecepcion.setCadenaCaracteresCodigo(catRecepcion.getCadenaCaracteresCodigo());

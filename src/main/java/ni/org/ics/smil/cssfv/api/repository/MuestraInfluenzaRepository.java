@@ -41,18 +41,27 @@ public interface MuestraInfluenzaRepository extends JpaRepository<MxInfluenza, L
 	List<MxInfluenza> getMuestrasInfluenzaPendientesEnvio(
 			@Param("id") Long id);
 	
-	@Query(value="SELECT a.cod_lab "
+	@Query(value="SELECT b.cod_lab "
 			+ "FROM mx_influenza a, muestras b "
 			+ "WHERE a.muestra_id = b.id "
 			+ "AND b.codigo_participante = :codigo "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
 			+ "AND b.anulada = false "
 			+ "ORDER BY a.id DESC limit 1", nativeQuery=true)
 	String findMxInfluenzaByCode(
-			@Param("codigo") Integer codigo);
+			@Param("codigo") Integer codigo, 
+			@Param("startDate") Date startDate,
+			@Param("endDate") Date endDate);
 	
 	@Query(value="SELECT * FROM mx_influenza a , muestras b "
 			+ "WHERE a.muestra_id = b.id "
-			+ "AND b.anulada = false "
-			+ "AND a.cod_lab_scan = :codLabScan", nativeQuery=true)
-	MxInfluenza findMxInfluenzaByCodLabScan(String codLabScan); 
+			+ "AND b.cod_lab_scan = :codLabScan "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			+ "AND b.anulada = false ", nativeQuery=true)
+	MxInfluenza findMxInfluenzaByCodLabScan(
+			@Param("codLabScan") String codLabScan, 
+			@Param("startDate") Date startDate,
+			@Param("endDate") Date endDate); 
 }

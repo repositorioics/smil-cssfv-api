@@ -34,7 +34,7 @@ public class Usuario {
 	private String nombres;
 	private String apellidos;
 	private String usuario;
-	private int codigoPersonal;
+	private Integer codigoPersonal;
 	private String clave;
 	
 	private String correo;
