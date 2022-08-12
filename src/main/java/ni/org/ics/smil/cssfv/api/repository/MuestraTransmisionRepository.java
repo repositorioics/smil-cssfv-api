@@ -34,13 +34,94 @@ public interface MuestraTransmisionRepository extends JpaRepository<MxTransmisio
 	List<MxTransmision> findByMuestraIdCodigoParticipanteAndMuestraIdMxIdIdAndMuestraIdFechaTomaBetween(
 			Integer codigoParticipante, Long id, Date fecha1, Date fecha2);
 	
-	@Query(value="SELECT * from mx_transmision a, muestras b "
+	/*@Query(value="SELECT * from mx_transmision a, muestras b "
 			+ "WHERE a.muestra_id = b.id "
 			+ "AND b.mx_id = :id "
 			+ "AND b.mx_enviada = false "
 			+ "AND b.anulada = false", nativeQuery=true)
 	List<MxTransmision> getMuestrasTransmisionPendientesEnvio(
-			@Param("id") Long id);
+			@Param("id") Long id);*/
+	
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND c.cat_envio_muestra_id = e.id "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
+			+ "AND e.id = :id "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMuestrasTransmisionPendientesEnvio(@Param("id") Long id);
+	
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND c.cat_envio_muestra_id = e.id "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
+			+ "AND e.id = :id "
+			+ "AND b.viaje = :viaje "
+			+ "AND b.mx_enviada = true", nativeQuery=true)
+	List<MxTransmision> getMuestrasTransmisionEnviadas(@Param("id") Long id, @Param("viaje") Integer viaje);
+	
+	/*Monitoreo Intensivo Influenza PBMC
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id IN (22,23) "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMxMonitoreoIntensivoPBMCPendientesEnvio();
+	
+	/*Monitoreo Intensivo Influenza ROJO
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id IN (24,25) "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMxMonitoreoIntensivoRojoPendientesEnvio();
+	
+	/*Monitoreo Intensivo Covid-19 PBMC
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id IN (35,36) "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMxCovidPbmcPendientesEnvio();
+	
+	/*Monitoreo Intensivo Covid-19 ROJO
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id IN (37,38) "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMxCovidRojoPendientesEnvio();
+	
+	/*Hisopados Covid-19
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id = 34 "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getMxHisopadosCovidPendientesEnvio();
+	
+	/*Hisopados Monitoreo Intensivo
+	@Query(value="SELECT * FROM mx_transmision a, muestras b, cat_recepcion c, cat_tipo_muestras d "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND b.cat_recepcion_id = 21 "
+			+ "AND b.fecha_registro = CURDATE() "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxTransmision> getHisopadosMonitoreoIntensivoPendientesEnvio();*/
 	
 	@Query(value="SELECT b.cod_lab "
 			+ "FROM mx_transmision a, muestras b "

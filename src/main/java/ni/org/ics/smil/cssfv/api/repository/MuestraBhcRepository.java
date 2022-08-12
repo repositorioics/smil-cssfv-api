@@ -26,13 +26,37 @@ public interface MuestraBhcRepository extends JpaRepository<MxBhc, Long> {
 	
 	List<MxBhc> findByMuestraIdCodigoParticipanteAndMuestraIdFechaTomaBetween(Integer codigoParticipante, Date fecha1, Date fecha2);
 	
-	@Query(value="SELECT * from mx_bhc a, muestras b "
+	/*
+	 * @Query(value="SELECT * from mx_bhc a, muestras b " +
+	 * "WHERE a.muestra_id = b.id " + "AND b.mx_id = :id " +
+	 * "AND b.mx_enviada = false " + "AND b.anulada = false", nativeQuery=true)
+	 * List<MxBhc> getMuestrasBhcPendientesEnvio(
+	 * 
+	 * @Param("id") Long id);
+	 */
+	
+	@Query(value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
 			+ "WHERE a.muestra_id = b.id "
-			+ "AND b.mx_id = :id "
-			+ "AND b.mx_enviada = false "
-			+ "AND b.anulada = false", nativeQuery=true)
-	List<MxBhc> getMuestrasBhcPendientesEnvio(
-			@Param("id") Long id);
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND c.cat_envio_muestra_id = e.id "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
+			+ "AND e.id = :id "
+			+ "AND b.mx_enviada = false", nativeQuery=true)
+	List<MxBhc> getMuestrasBhcPendientesEnvio(@Param("id") Long id);
+	
+	@Query(value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND c.cat_envio_muestra_id = e.id "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
+			+ "AND e.id = :id "
+			+ "AND b.viaje = :viaje "
+			+ "AND b.mx_enviada = true", nativeQuery=true)
+	List<MxBhc> getMuestrasBhcEnviadas(@Param("id") Long id, @Param("viaje") Integer viaje);
+	
+	
 	
 	@Query(value="SELECT b.cod_lab "
 			+ "FROM mx_bhc a, muestras b "

@@ -36,4 +36,11 @@ public interface MuestraRepository extends JpaRepository<Muestra, Long> {
 	@Query(value = "SELECT * FROM muestras a "
 			+ "WHERE a.cod_lab = :codLab", nativeQuery=true)
 	Muestra findMxByCodLab(@Param("codLab") String codLab);
+	
+	/*Verificar si existe muestra correspondiente al numero de envio*/
+	@Query(value = "SELECT count(*) "
+			+ "FROM muestras a "
+			+ "WHERE DATE_FORMAT(a.fecha_envio, '%Y-%m-%d') = CURDATE() "
+			+ "AND viaje = :viaje", nativeQuery=true)
+	long countMuestraByViaje(@Param("viaje") Integer viaje);
 }

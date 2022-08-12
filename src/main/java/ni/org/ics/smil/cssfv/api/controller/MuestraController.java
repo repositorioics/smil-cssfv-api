@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ni.org.ics.smil.cssfv.api.entity.Muestra;
 import ni.org.ics.smil.cssfv.api.entity.MxBhc;
 import ni.org.ics.smil.cssfv.api.entity.MxDengue;
+import ni.org.ics.smil.cssfv.api.entity.MxDengueDetalle;
 import ni.org.ics.smil.cssfv.api.entity.MxInfluenza;
 import ni.org.ics.smil.cssfv.api.entity.MxTransmision;
 import ni.org.ics.smil.cssfv.api.entity.MxU01;
@@ -96,6 +97,11 @@ public class MuestraController {
 		return service.getMxByCodLab(codLab);
 	}
 	
+	@GetMapping("/muestras/existe/envio-seleccionado")
+	public long getMxByViaje(@RequestParam Integer viaje) {
+		return service.countMuestraByViaje(viaje);
+	}
+	
 	/*BHC*/
 	@GetMapping("/muestras/bhc")
 	public List<MxBhc> getMuestrasBhc() {
@@ -151,6 +157,11 @@ public class MuestraController {
 		return service.muestrasBhcPendinteEnvio(id);
 	}
 	
+	@GetMapping("/muestras/bhc/enviadas")
+	public List<MxBhc> getMuestrasBhcEnviadas(@RequestParam Long id, @RequestParam Integer viaje) {
+		return service.muestrasBhcEnviadas(id, viaje);
+	}
+	
 	@GetMapping("/muestras/bhc/ultimo/code_lab")
 	public String getLastMxBHCByCode(@RequestParam Integer codigo) {
 		return service.ultimaMuestraBHCByCode(codigo);
@@ -204,7 +215,7 @@ public class MuestraController {
     }
 	
 	@GetMapping("/muestras/dengue/pendientes/envio")
-	public List<MxDengue> getMuestrasDenguePendientes(@RequestParam Long id) {
+	public List<MxDengue> getMuestrasDenguePendientes(Long id) {
 		return service.muestrasDenguePendinteEnvio(id);
 	}
 	
@@ -292,6 +303,12 @@ public class MuestraController {
 	public List<MxDengue> getMxDengueCandidatosPbmc() {
 		return service.muestrasMxDengueCandidatosPbmc();
 	}
+	
+	/*Dengue Detalle*/
+	@PostMapping("/muestras/dengue/detalle/{id}")
+    public MxDengueDetalle addMuestraDengueDetalle(@PathVariable Long id, @RequestBody MxDengueDetalle dengueDetalle) {
+        return service.saveMuestraDengueDetalle(id, dengueDetalle);
+    }
 	
 	/*Influenza*/
 	@GetMapping("/muestras/influenza")
@@ -385,6 +402,16 @@ public class MuestraController {
 		return service.muestrasUO1PendinteEnvio(id);
 	}
 	
+	@GetMapping("/muestras/u01/enviadas")
+	public List<MxU01> getMuestrasUO1Pendientes(@RequestParam Long id, @RequestParam Integer viaje) {
+		return service.muestrasUO1Enviadas(id, viaje);
+	}
+	
+	/*@GetMapping("/muestras/u01/vacunas/pendientes/envio")
+	public List<MxU01> getMuestrasVacunasUO1Pendientes() {
+		return service.muestrasUO1VacunasPendinteEnvio();
+	}*/
+	
 	@GetMapping("/muestras/u01/ultimo/code_lab")
 	public String getLastMxUO1ByCode(@RequestParam Integer codigo) {
 		return service.ultimaMuestraUO1ByCode(codigo);
@@ -430,6 +457,36 @@ public class MuestraController {
 	public List<MxTransmision> getMuestrasTransmisionPendientes(@RequestParam Long id) {
 		return service.muestrasTransmisionPendinteEnvio(id);
 	}
+	
+	@GetMapping("/muestras/transmision/enviadas")
+	public List<MxTransmision> getMuestrasTransmisionPendientes(@RequestParam Long id, @RequestParam Integer viaje) {
+		return service.muestrasTransmisionEnviadas(id, viaje);
+	}
+	/*@GetMapping("/muestras/transmision/monitoreo/intensivo/pbmc/pendientes/envio")
+	public List<MxTransmision> getMuestrasMonitoreoIntensivoPbmcPendientes() {
+		return service.muestrasMonitoreoIntensivoPBMCPendinteEnvio();
+	}
+	@GetMapping("/muestras/transmision/monitoreo/intensivo/rojo/pendientes/envio")
+	public List<MxTransmision> getMuestrasMonitoreoIntensivoRojoPendientes() {
+		return service.muestrasMonitoreoIntensivoRojoPendinteEnvio();
+	}
+	@GetMapping("/muestras/transmision/covid/pbmc/pendientes/envio")
+	public List<MxTransmision> getMuestrasCovidPbmcPendientes() {
+		return service.muestrasCovidPbmcPendinteEnvio();
+	}
+	@GetMapping("/muestras/transmision/covid/rojo/pendientes/envio")
+	public List<MxTransmision> getMuestrasCovidRojoPendientes() {
+		return service.muestrasCovidRojoPendinteEnvio();
+	}
+	@GetMapping("/muestras/transmision/hisopados/covid/pendientes/envio")
+	public List<MxTransmision> getMuestrasHisopadosCovidPendientes() {
+		return service.muestrasHisopadosCovidPendinteEnvio();
+	}
+	@GetMapping("/muestras/transmision/hisopado/monitoreo/intensivo/pendientes/envio")
+	public List<MxTransmision> getMuestrasHisopadosMonitoreoIntensivoPendientes() {
+		return service.muestrasHisopadosMonitoreoIntensivoEnvio();
+	}*/
+	
 	
 	@GetMapping("/muestras/transmision/ultimo/code_lab")
 	public String getLastMxTransmisionByCode(@RequestParam Integer codigo) {

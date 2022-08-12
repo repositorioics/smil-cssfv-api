@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Subselect(
 	    "select a.CODIGO AS Codigo,a.NOMBRE1 AS Nombre1,a.NOMBRE2 AS Nombre2,a.APELLIDO1 AS Apellido1,a.APELLIDO2 AS Apellido2, "
 	    + "a.SEXO AS Sexo, DATE_FORMAT(a.FECHANAC, \"%d-%m-%Y\") AS FechaNac,b.tutor AS Tutor,b.est_part AS EstadoParticipante,b.estudio AS EstudiosParticipante,"
-	    + "c.DIRECCION AS Direccion, c.CODIGO AS CodigoCasa "
+	    + "c.DIRECCION AS Direccion, a.CODIGO_CASA AS CodigoCasa, b.casa_chf AS CasaChf "
 	    + "from ((estudios_ics.participantes a join estudios_ics.participantes_procesos b on((a.CODIGO = b.codigo))) "
 	    + "join estudios_ics.casas c on((a.CODIGO_CASA = c.CODIGO))) where (b.est_part = 1) order by CODIGO"
 	)
@@ -37,5 +37,6 @@ public class ParticipanteView {
 	private String estudiosparticipante;
 	private String direccion;
 	private String codigocasa;
+	private String casachf;
 	
 }

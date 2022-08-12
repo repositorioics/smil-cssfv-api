@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ni.org.ics.smil.cssfv.api.entity.Muestra;
 import ni.org.ics.smil.cssfv.api.entity.MxBhc;
 import ni.org.ics.smil.cssfv.api.entity.MxDengue;
+import ni.org.ics.smil.cssfv.api.entity.MxDengueDetalle;
 import ni.org.ics.smil.cssfv.api.entity.MxInfluenza;
 import ni.org.ics.smil.cssfv.api.entity.MxTransmision;
 import ni.org.ics.smil.cssfv.api.entity.MxU01;
@@ -23,6 +24,7 @@ import ni.org.ics.smil.cssfv.api.entity.view.MuestrasTomadasView;
 import ni.org.ics.smil.cssfv.api.exceptions.NotEntityFoundException;
 import ni.org.ics.smil.cssfv.api.repository.CatAnioEstudioRepository;
 import ni.org.ics.smil.cssfv.api.repository.MuestraBhcRepository;
+import ni.org.ics.smil.cssfv.api.repository.MuestraDengueDetalleRepository;
 import ni.org.ics.smil.cssfv.api.repository.MuestraDengueRepository;
 import ni.org.ics.smil.cssfv.api.repository.MuestraInfluenzaRepository;
 import ni.org.ics.smil.cssfv.api.repository.MuestraRepository;
@@ -60,6 +62,9 @@ public class MuestraService {
 	
 	@Autowired
 	private CatAnioEstudioRepository repositoryCatAnioEstudio;
+	
+	@Autowired
+	private MuestraDengueDetalleRepository repositoryDengueDetalle;
 	
 	
 	/*
@@ -154,6 +159,10 @@ public class MuestraService {
 	
 	public List<MuestrasEstudiosView> getMuestrasPorEstudios() {
 		return muestrasEstudiosViewRepository.findAll();
+	}
+	
+	public long countMuestraByViaje(Integer viaje) {
+		return repository.countMuestraByViaje(viaje);
 	}
 	/*
 	 * Tabla de muestras BHC
@@ -308,6 +317,10 @@ public class MuestraService {
 		return repositoryBhc.getMuestrasBhcPendientesEnvio(id);
 	}
 	
+	public List<MxBhc> muestrasBhcEnviadas(Long id, Integer viaje) {
+		return repositoryBhc.getMuestrasBhcEnviadas(id, viaje);
+	}
+	
 	public String ultimaMuestraBHCByCode(Integer codigo) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryBhc.findMxBHCByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
@@ -366,6 +379,25 @@ public class MuestraService {
 		
 		return repositoryDengue.save(muestra);
 		//return repositoryDengue.save(muestra);
+	}
+	
+	@Transactional
+	public MxDengueDetalle saveMuestraDengueDetalle(Long id, MxDengueDetalle dengueDetalle) {
+		Muestra muestra = dengueDetalle.getMuestraDengueDetalleId().getMuestraId();
+		MxDengue muestraDengue = dengueDetalle.getMuestraDengueDetalleId();
+		MxDengueDetalle mxDengueDetalle = new MxDengueDetalle();
+		
+		repository.save(muestra);
+		
+		muestraDengue.getMuestraId().setId(muestra.getId());
+		
+		repositoryDengue.save(muestraDengue);
+		
+		mxDengueDetalle.setMuestraDengueDetalleId(muestraDengue);
+		mxDengueDetalle.setMuestraDengueId(id);
+		mxDengueDetalle.setTipoMuestraId(dengueDetalle.getTipoMuestraId());
+		
+		return repositoryDengueDetalle.save(mxDengueDetalle);
 	}
 	
 	public MxDengue getMuestraDengueById(Long id) {
@@ -905,6 +937,13 @@ public class MuestraService {
 		return repositoryU01.getMuestrasUO1PendientesEnvio(id);
 	}
 	
+	public List<MxU01> muestrasUO1Enviadas(Long id, Integer viaje) {
+		return repositoryU01.getMuestrasUO1Enviodas(id, viaje);
+	}
+	/*public List<MxU01> muestrasUO1VacunasPendinteEnvio() {
+		return repositoryU01.getMuestrasVacunasUO1PendientesEnvio();
+	}*/
+	
 	public String ultimaMuestraUO1ByCode(Integer codigo) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryU01.findMxUO1ByCode(codigo, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
@@ -1052,6 +1091,29 @@ public class MuestraService {
 	public List<MxTransmision> muestrasTransmisionPendinteEnvio(Long id) {
 		return repositoryTransmision.getMuestrasTransmisionPendientesEnvio(id);
 	}
+	
+	public List<MxTransmision> muestrasTransmisionEnviadas(Long id, Integer viaje) {
+		return repositoryTransmision.getMuestrasTransmisionEnviadas(id, viaje);
+	}
+	
+	/*public List<MxTransmision> muestrasMonitoreoIntensivoPBMCPendinteEnvio() {
+		return repositoryTransmision.getMxMonitoreoIntensivoPBMCPendientesEnvio();
+	}
+	public List<MxTransmision> muestrasMonitoreoIntensivoRojoPendinteEnvio() {
+		return repositoryTransmision.getMxMonitoreoIntensivoRojoPendientesEnvio();
+	}
+	public List<MxTransmision> muestrasCovidPbmcPendinteEnvio() {
+		return repositoryTransmision.getMxCovidPbmcPendientesEnvio();
+	}
+	public List<MxTransmision> muestrasCovidRojoPendinteEnvio() {
+		return repositoryTransmision.getMxCovidRojoPendientesEnvio();
+	}
+	public List<MxTransmision> muestrasHisopadosCovidPendinteEnvio() {
+		return repositoryTransmision.getMxHisopadosCovidPendientesEnvio();
+	}
+	public List<MxTransmision> muestrasHisopadosMonitoreoIntensivoEnvio() {
+		return repositoryTransmision.getHisopadosMonitoreoIntensivoPendientesEnvio();
+	}*/
 	
 	public String ultimaMuestraTransmisionByCode(Integer codigo) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();

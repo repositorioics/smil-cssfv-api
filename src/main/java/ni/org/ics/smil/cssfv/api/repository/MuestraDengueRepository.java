@@ -226,13 +226,23 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			@Param("codigoParticipante") Integer codigoParticipante);
 	
 	
-	@Query(value="SELECT * from mx_dengue a, muestras b "
+	/*@Query(value="SELECT * from mx_dengue a, muestras b "
 			+ "WHERE a.muestra_id = b.id "
 			+ "and b.mx_id = :id "
 			+ "and b.mx_enviada = false "
 			+ "and b.anulada = false", nativeQuery=true)
 	List<MxDengue> getMuestrasDenguePendientesEnvio(
-			@Param("id") Long id);
+			@Param("id") Long id);*/
+	
+	@Query(value="SELECT * FROM mx_dengue a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.cat_recepcion_id = c.id "
+			+ "AND c.cat_tipo_muestra_id = d.id "
+			+ "AND c.cat_envio_muestra_id = e.id "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
+			+ "AND e.id = :id "
+			+ "AND b.mx_enviada = false;", nativeQuery=true)
+	List<MxDengue> getMuestrasDenguePendientesEnvio(@Param("id") Long id);
 	
 	/******OBTENER LAS MUESTRAS DENGUE DEL DIA*********/
 	@Query(value="SELECT * FROM mx_dengue a, muestras b, cat_recepcion c "
@@ -341,9 +351,9 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "WHERE a.muestra_id = b.id "
 			+ "AND b.cat_recepcion_id = c.id "
 			+ "AND b.codigo_participante = :codigo "
-			//+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
-			//+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
-			+ "AND b.fecha_toma BETWEEN :startDate AND :endDate "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= :startDate "
+			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= :endDate "
+			//+ "AND b.fecha_toma BETWEEN :startDate AND :endDate "
 			+ "AND b.anulada = false "
 			+ "AND c.cat_tipo_muestra_id = 12 "
 			+ "AND c.estudio = 3 "
@@ -444,7 +454,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.consulta = 'I' "
 			+ "AND d.cat_tipo_muestra_id = 12 "
 			+ "AND d.estudio = 3 "
-			+ "AND ((SELECT TIMESTAMPDIFF(DAY, c.fif, curdate()) AS dias_fif) <= 9) "
-			+ "OR ((SELECT TIMESTAMPDIFF(DAY, c.fis, curdate()) AS dias_fis) <= 9);", nativeQuery=true)
+			+ "AND ((SELECT TIMESTAMPDIFF(DAY, c.fif, curdate()) AS dias_fif) <= 20) " //9 es el valor que tiene que llevar
+			+ "OR ((SELECT TIMESTAMPDIFF(DAY, c.fis, curdate()) AS dias_fis) <= 20);", nativeQuery=true)
 	List<MxDengue> findMuestrasDengueCandidatosPbmc();
 }
