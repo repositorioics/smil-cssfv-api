@@ -47,6 +47,7 @@ public class SegOpcionMenuService {
 		
 		if (oldOpcionMenu == null) throw new NotEntityFoundException(OpcionMenu.class.getSimpleName(), "Id", String.valueOf(opcionMenu.getId()));
 		
+		oldOpcionMenu.setMenuId(opcionMenu.getMenuId());
 		oldOpcionMenu.setNombre(opcionMenu.getNombre());
 		oldOpcionMenu.setDescripcion(opcionMenu.getDescripcion());
 		oldOpcionMenu.setActivo(opcionMenu.isActivo());

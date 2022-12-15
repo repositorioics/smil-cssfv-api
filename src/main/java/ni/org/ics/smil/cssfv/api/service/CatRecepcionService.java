@@ -64,6 +64,7 @@ public class CatRecepcionService {
 		oldCatRecepcion.setCadenaCaracteresCodigo(catRecepcion.getCadenaCaracteresCodigo());
 		oldCatRecepcion.setDescripcionCadena(catRecepcion.getDescripcionCadena());
 		oldCatRecepcion.setExpresionRegular(catRecepcion.getExpresionRegular());
+		oldCatRecepcion.setCatClasificacionMuestraId(catRecepcion.getCatClasificacionMuestraId());
 		oldCatRecepcion.setActivo(catRecepcion.getActivo());
 		return repository.save(catRecepcion);
 	}

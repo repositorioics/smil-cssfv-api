@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import ni.org.ics.smil.cssfv.api.entity.MxBhc;
 import ni.org.ics.smil.cssfv.api.entity.MxDengue;
+import ni.org.ics.smil.cssfv.api.entity.MxU01;
 
 public interface MuestraBhcRepository extends JpaRepository<MxBhc, Long> {
 	
@@ -35,28 +36,42 @@ public interface MuestraBhcRepository extends JpaRepository<MxBhc, Long> {
 	 * @Param("id") Long id);
 	 */
 	
-	@Query(value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
-			+ "WHERE a.muestra_id = b.id "
-			+ "AND b.cat_recepcion_id = c.id "
-			+ "AND c.cat_tipo_muestra_id = d.id "
-			+ "AND c.cat_envio_muestra_id = e.id "
-			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
-			+ "AND e.id = :id "
-			+ "AND b.mx_enviada = false", nativeQuery=true)
-	List<MxBhc> getMuestrasBhcPendientesEnvio(@Param("id") Long id);
+	/*
+	 * @Query(
+	 * value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+	 * + "WHERE a.muestra_id = b.id " + "AND b.cat_recepcion_id = c.id " +
+	 * "AND c.cat_tipo_muestra_id = d.id " + "AND c.cat_envio_muestra_id = e.id " +
+	 * "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() " +
+	 * "AND e.id = :id " + "AND b.mx_enviada = false", nativeQuery=true) List<MxBhc>
+	 * getMuestrasBhcPendientesEnvio(@Param("id") Long id);
+	 */
 	
-	@Query(value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
-			+ "WHERE a.muestra_id = b.id "
-			+ "AND b.cat_recepcion_id = c.id "
-			+ "AND c.cat_tipo_muestra_id = d.id "
-			+ "AND c.cat_envio_muestra_id = e.id "
-			+ "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() "
-			+ "AND e.id = :id "
-			+ "AND b.viaje = :viaje "
-			+ "AND b.mx_enviada = true", nativeQuery=true)
-	List<MxBhc> getMuestrasBhcEnviadas(@Param("id") Long id, @Param("viaje") Integer viaje);
-	
-	
+	/*
+	 * @Query(
+	 * value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+	 * + "WHERE a.muestra_id = b.id " + "AND b.cat_recepcion_id = c.id " +
+	 * "AND c.cat_tipo_muestra_id = d.id " + "AND c.cat_envio_muestra_id = e.id " +
+	 * "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') = CURDATE() " +
+	 * "AND e.id = :id " + "AND b.viaje = :viaje " + "AND b.mx_enviada = true",
+	 * nativeQuery=true) List<MxBhc> getMuestrasBhcEnviadas(@Param("id") Long
+	 * id, @Param("viaje") Integer viaje);
+	 * 
+	 * @Query(
+	 * value="SELECT * FROM mx_bhc a, muestras b, cat_recepcion c, cat_tipo_muestras d, cat_envio_muestras e "
+	 * + "WHERE a.muestra_id = b.id " + "AND b.cat_recepcion_id = c.id " +
+	 * "AND c.cat_tipo_muestra_id = d.id " + "AND c.cat_envio_muestra_id = e.id " +
+	 * "AND e.id = :id " + "AND b.viaje = :viaje " +
+	 * "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') >= DATE_FORMAT(:startDate, '%Y-%m-%d') "
+	 * +
+	 * "AND DATE_FORMAT(b.fecha_registro, '%Y-%m-%d') <= DATE_FORMAT(:endDate, '%Y-%m-%d') "
+	 * + "AND b.mx_enviada = true", nativeQuery=true) List<MxBhc>
+	 * getMuestrasBhcEnviadasRangoFecha(@Param("id") Long id, @Param("viaje")
+	 * Integer viaje,
+	 * 
+	 * @Param("startDate") Date startDate,
+	 * 
+	 * @Param("endDate") Date endDate);
+	 */
 	
 	@Query(value="SELECT b.cod_lab "
 			+ "FROM mx_bhc a, muestras b "
@@ -80,6 +95,12 @@ public interface MuestraBhcRepository extends JpaRepository<MxBhc, Long> {
 	MxBhc findMxBHCByCodLabScan(
 			@Param("codLabScan") String codLabScan, 
 			@Param("startDate") Date startDate,
-			@Param("endDate") Date endDate); 
+			@Param("endDate") Date endDate);
+	
+	@Query(value="SELECT * FROM mx_bhc a,  muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.id = :idMuestra ", nativeQuery=true)
+	MxBhc findMxBHCByIdMuestra(
+			@Param("idMuestra") Long idMuestra);
 
 }

@@ -102,6 +102,51 @@ public class MuestraController {
 		return service.countMuestraByViaje(viaje);
 	}
 	
+	@GetMapping("/muestras/influenza/retoma")
+	public List<Muestra> getMxInfluenzaRetoma() {
+		return service.muestrasInfluenzaRetoma();
+	}
+	
+	@GetMapping("muestras/codigoParticipante/{codigo}")
+	public List<Muestra> getMuestrasByCodigoParticipante(@PathVariable Integer codigo) {
+		return service.getMuestrasByCodigoParticipante(codigo);
+	}
+	
+	@GetMapping("/muestras/pbmc/pendientes/envio") 
+	public List<?> getMxPBMCPendientesEnvio() {
+		return service.mxPBMCPendientesEnvio();
+	}
+	
+	@GetMapping("/muestras/rojo/pendientes/envio") 
+	public List<?> getMxRojoPendientesEnvio() {
+		return service.mxROJOPendientesEnvio();
+	}
+	
+	@GetMapping("/muestras/hisopados/pendientes/envio") 
+	public List<?> getHisopadosPendientesEnvio() {
+		return service.hisopadosPendientesEnvio();
+	}
+	
+	@GetMapping("/muestras/enviadas/{viaje}") 
+	public List<?> getMuestrasEnviadas(@PathVariable Integer viaje) {
+		return service.muestrasEnviadas(viaje);
+	}
+	
+	@GetMapping("/muestras/enviadas/rangoFecha/viaje/pbmc") 
+	public List<?> getMuestrasEnviadasPbmcByRangeDateAndViaje(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Integer viaje) throws ParseException {
+		return service.muestrasEnviadasPbmcByRangeDateAndViaje(startDate, endDate, viaje);
+	}
+	
+	@GetMapping("/muestras/enviadas/rangoFecha/viaje/rojo") 
+	public List<?> getMuestrasEnviadasRojoByRangeDateAndViaje(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Integer viaje) throws ParseException {
+		return service.muestrasEnviadasRojoByRangeDateAndViaje(startDate, endDate, viaje);
+	}
+	
+	@GetMapping("/muestras/enviadas/rangoFecha/viaje/hisopados") 
+	public List<?> getMuestrasEnviadasHisopadosByRangeDateAndViaje(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Integer viaje) throws ParseException {
+		return service.muestrasEnviadasHisopadosByRangeDateAndViaje(startDate, endDate, viaje);
+	}
+	
 	/*BHC*/
 	@GetMapping("/muestras/bhc")
 	public List<MxBhc> getMuestrasBhc() {
@@ -152,15 +197,20 @@ public class MuestraController {
         return service.updateMuestraBhc(muestra);
     }
 	
-	@GetMapping("/muestras/bhc/pendientes/envio")
-	public List<MxBhc> getMuestrasBhcPendientes(@RequestParam Long id) {
-		return service.muestrasBhcPendinteEnvio(id);
-	}
+	/*
+	 * @GetMapping("/muestras/bhc/pendientes/envio") public List<MxBhc>
+	 * getMuestrasBhcPendientes(@RequestParam Long id) { return
+	 * service.muestrasBhcPendinteEnvio(id); }
+	 */
 	
-	@GetMapping("/muestras/bhc/enviadas")
-	public List<MxBhc> getMuestrasBhcEnviadas(@RequestParam Long id, @RequestParam Integer viaje) {
-		return service.muestrasBhcEnviadas(id, viaje);
-	}
+	/*
+	 * @GetMapping("/muestras/bhc/enviadas") public List<MxBhc>
+	 * getMuestrasBhcEnviadas(@RequestParam Long id, @RequestParam Integer viaje,
+	 * 
+	 * @RequestParam String startDate, @RequestParam String endDate) throws
+	 * ParseException { return service.muestrasBhcEnviadas(id, viaje, startDate,
+	 * endDate); }
+	 */
 	
 	@GetMapping("/muestras/bhc/ultimo/code_lab")
 	public String getLastMxBHCByCode(@RequestParam Integer codigo) {
@@ -171,6 +221,11 @@ public class MuestraController {
 	public MxBhc getMxBHCByCodLabScan(String codLabScan) {
 		return service.muestraBHCByCodLabScan(codLabScan);
 	}
+	
+	@GetMapping("/muestras/bhc/idMuestra/{idMuestra}")
+    public MxBhc getMuestraBHCByIdMuestra(@PathVariable Long idMuestra) {
+        return service.muestraBHCByIdMuestra(idMuestra);
+    }
 	
 	/*Dengue*/
 	@GetMapping("/muestras/dengue")
@@ -299,9 +354,19 @@ public class MuestraController {
 		return service.muestraMxDengueByCodeLabScan(codLabScan);
 	}
 	
-	@GetMapping("/muestras/dengue/candidatos/pbmc")
-	public List<MxDengue> getMxDengueCandidatosPbmc() {
-		return service.muestrasMxDengueCandidatosPbmc();
+	@GetMapping("/muestras/dengue/idMuestra/{idMuestra}")
+    public MxDengue getMuestraDengueByIdMuestra(@PathVariable Long idMuestra) {
+        return service.muestraDengueByIdMuestra(idMuestra);
+    }
+	
+	@GetMapping("/muestras/dengue/candidatos")
+	public List<MxDengue> getMxDengueCandidatos() {
+		return service.muestrasMxDengueCandidatos();
+	}
+	
+	@GetMapping("/muestras/dengue/retoma/completarVolumen")
+	public List<MxDengue> getMxDengueRetomaCompletarVolumen() {
+		return service.muestrasMxDengueRetomaYCompletarVolumen();
 	}
 	
 	/*Dengue Detalle*/
@@ -351,10 +416,11 @@ public class MuestraController {
 		return service.getUltimoRegistroMuestraInfluenzaByCodigo(codigoParticipante);
 	}
 	
-	@GetMapping("/muestras/influenza/pendientes/envio")
-	public List<MxInfluenza> getMuestrasInfluenzaPendientes(@RequestParam Long id) {
-		return service.muestrasInfluenzaPendinteEnvio(id);
-	}
+	/*
+	 * @GetMapping("/muestras/influenza/pendientes/envio") public List<MxInfluenza>
+	 * getMuestrasInfluenzaPendientes(@RequestParam Long id) { return
+	 * service.muestrasInfluenzaPendinteEnvio(id); }
+	 */
 	
 	@GetMapping("/muestras/influenza/ultimo/code_lab")
 	public String getLastMxInfluenzaByCode(@RequestParam Integer codigo) {
@@ -365,6 +431,11 @@ public class MuestraController {
 	public MxInfluenza getMxInfluenzaByCodLabScan(String codLabScan) {
 		return service.muestraInfluenzaByCodLabScan(codLabScan);
 	}
+	
+	@GetMapping("/muestras/influenza/idMuestra/{idMuestra}")
+    public MxInfluenza getMuestraInfluenzaByIdMuestra(@PathVariable Long idMuestra) {
+        return service.muestraInfluenzaByIdMuestra(idMuestra);
+    }
 	
 	/*U01*/
 	@GetMapping("/muestras/u01")
@@ -397,15 +468,20 @@ public class MuestraController {
 		return service.getMuestraU01ByCodigoParticipanteAndFechaToma(codigoParticipante, strFecha1, strFecha2);		
     }
 	
-	@GetMapping("/muestras/u01/pendientes/envio")
-	public List<MxU01> getMuestrasUO1Pendientes(@RequestParam Long id) {
-		return service.muestrasUO1PendinteEnvio(id);
-	}
+	/*
+	 * @GetMapping("/muestras/u01/pendientes/envio") public List<MxU01>
+	 * getMuestrasUO1Pendientes(@RequestParam Long id) { return
+	 * service.muestrasUO1PendinteEnvio(id); }
+	 */
 	
-	@GetMapping("/muestras/u01/enviadas")
-	public List<MxU01> getMuestrasUO1Pendientes(@RequestParam Long id, @RequestParam Integer viaje) {
-		return service.muestrasUO1Enviadas(id, viaje);
-	}
+	/*
+	 * @GetMapping("/muestras/u01/enviadas") public List<MxU01>
+	 * getMuestrasUO1Pendientes(@RequestParam Long id, @RequestParam Integer viaje,
+	 * 
+	 * @RequestParam String startDate, @RequestParam String endDate) throws
+	 * Exception { return service.muestrasUO1Enviadas(id, viaje, startDate,
+	 * endDate); }
+	 */
 	
 	/*@GetMapping("/muestras/u01/vacunas/pendientes/envio")
 	public List<MxU01> getMuestrasVacunasUO1Pendientes() {
@@ -418,9 +494,14 @@ public class MuestraController {
 	}
 	
 	@GetMapping("/muestras/u01/cod_lab_scan")
-	public MxU01 getMxUO1ByCodLabScan(String codLabScan) {
+	public MxU01 getMxUO1ByCodLabScan(@RequestParam String codLabScan) {
 		return service.muestraU01ByCodeLabScan(codLabScan);
 	}
+	
+	@GetMapping("/muestras/u01/idMuestra/{idMuestra}")
+    public MxU01 getMuestraU01ByIdMuestra(@PathVariable Long idMuestra) {
+        return service.muestraU01ByIdMuestra(idMuestra);
+    }
 	
 	/*Transmision*/
 	@GetMapping("/muestras/transmision")
@@ -453,15 +534,21 @@ public class MuestraController {
 		return service.getMuestraTransmisionByCodigoParticipanteAndFechaToma(codigoParticipante, idMx, strFecha1, strFecha2);		
     }
 	
-	@GetMapping("/muestras/transmision/pendientes/envio")
-	public List<MxTransmision> getMuestrasTransmisionPendientes(@RequestParam Long id) {
-		return service.muestrasTransmisionPendinteEnvio(id);
-	}
+	/*
+	 * @GetMapping("/muestras/transmision/pendientes/envio") public
+	 * List<MxTransmision> getMuestrasTransmisionPendientes(@RequestParam Long id) {
+	 * return service.muestrasTransmisionPendinteEnvio(id); }
+	 */
 	
-	@GetMapping("/muestras/transmision/enviadas")
-	public List<MxTransmision> getMuestrasTransmisionPendientes(@RequestParam Long id, @RequestParam Integer viaje) {
-		return service.muestrasTransmisionEnviadas(id, viaje);
-	}
+	/*
+	 * @GetMapping("/muestras/transmision/enviadas") public List<MxTransmision>
+	 * getMuestrasTransmisionPendientes(@RequestParam Long id, @RequestParam Integer
+	 * viaje,
+	 * 
+	 * @RequestParam String startDate, @RequestParam String endDate) throws
+	 * Exception { return service.muestrasTransmisionEnviadas(id, viaje, startDate,
+	 * endDate); }
+	 */
 	/*@GetMapping("/muestras/transmision/monitoreo/intensivo/pbmc/pendientes/envio")
 	public List<MxTransmision> getMuestrasMonitoreoIntensivoPbmcPendientes() {
 		return service.muestrasMonitoreoIntensivoPBMCPendinteEnvio();
@@ -497,4 +584,9 @@ public class MuestraController {
 	public MxTransmision getMxTransmisionByCodLabScan(String codLabScan) {
 		return service.muestraTransmisionByCodLabScan(codLabScan);
 	}
+	
+	@GetMapping("/muestras/transmision/idMuestra/{idMuestra}")
+    public MxTransmision getMuestraTransmisionByIdMuestra(@PathVariable Long idMuestra) {
+        return service.muestraTransmisionByIdMuestra(idMuestra);
+    }
 }

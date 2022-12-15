@@ -37,10 +37,12 @@ public class Muestra {
 	private Integer codigoCasa;
 	private Long quienOrdena;
 	private String horaToma;
+	private String horaRefrigeracion;
 	private String motivoNoMx;
 	private Float volumen;
 	private Boolean mxTomada;
 	private Boolean mxEnviada;
+	private Boolean retoma;
 	private String observacion;
 	private Boolean anulada;
 	private Boolean otroMotivoAnulacion;
@@ -53,6 +55,8 @@ public class Muestra {
 	private BigDecimal tempEnvio;
 	private String codLab;
 	private String codLabScan;
+	private BigDecimal tempRecepcion;
+	private BigDecimal tempAlmacenamiento;
 	
 	@Temporal(TemporalType.DATE)
 	private Date fechaToma;	

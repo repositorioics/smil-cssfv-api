@@ -58,12 +58,12 @@ public class MxTransmision {
 	//private String codLabMi;
 	private String motivoSinFif;
 	//private String codLab;
-	private Boolean mxNoTomada;
-	private String horaRefrigeracion;
-	private Integer viaje;
-	@Temporal(TemporalType.DATE)
-	private Date fechaEnvio;
-	private String horaEnvio;
+	//private Boolean mxNoTomada;
+	//private String horaRefrigeracion;
+	//private Integer viaje;
+	//@Temporal(TemporalType.DATE)
+	//private Date fechaEnvio;
+	//private String horaEnvio;
 	private Boolean mxFinalInicial;
 	private Boolean plasma;
 	private Boolean transmision;

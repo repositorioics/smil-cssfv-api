@@ -42,4 +42,8 @@ public class CatRecepcion {
 	@ManyToOne
 	@JoinColumn(name="cat_tipo_muestra_id", referencedColumnName = "id")
 	private CatTipoMuestra catTipoMuestraId;
+	
+	@ManyToOne
+	@JoinColumn(name="cat_clasificacion_muestra_id", referencedColumnName = "id")
+	private CatTipoMuestra catClasificacionMuestraId;
 }

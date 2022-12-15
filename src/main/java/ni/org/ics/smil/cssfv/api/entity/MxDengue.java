@@ -67,7 +67,7 @@ public class MxDengue {
 	@JoinColumn(name="motivo_mismo_ef", referencedColumnName = "id")
 	private CatMismoEpfebril motivoMismoEf;
 	
-	private Boolean retoma;
+	//private Boolean retoma;
 	private Boolean completarVol;
 	private Boolean pruebaRapida;
 	private Boolean mxPapelFiltro;
@@ -77,7 +77,7 @@ public class MxDengue {
 	//private String codLabScan;
 	private Boolean mxNoTomada;
 	private Integer anioEstSegunFif;
-	private String horaRefrigeracion;
+	//private String horaRefrigeracion;
 	@Temporal(TemporalType.DATE)
 	private Date fechaSeparacion;
 	private String horaSeparacion;
@@ -92,6 +92,9 @@ public class MxDengue {
 	private Boolean positivoZika;
 	private Boolean orina;
 	private Boolean saliva;
+	private Boolean tienePbmc;
+	private Boolean tienePaxGene;
+	private Boolean tieneBhc;
 	//private String motivoMismoEf;
 	//private Time tiempoProcesamiento;
 }

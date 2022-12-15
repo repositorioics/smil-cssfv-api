@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import ni.org.ics.smil.cssfv.api.entity.MxBhc;
 import ni.org.ics.smil.cssfv.api.entity.MxDengue;
 
 public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
@@ -446,7 +447,7 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.cod_lab_scan = :codLabScan", nativeQuery=true)
 	MxDengue findMxDengueByCodLabScan(String codLabScan);
 	
-	/*MUESTRAS DENGUE CANDIDATOS A PBMC*/
+	/*MUESTRAS DENGUE CANDIDATOS A PBMC, BHC, PAXGENE, METABOLOMICA*/
 	@Query(value = "SELECT * FROM mx_dengue a, cat_consultas b, muestras c, cat_recepcion d "
 			+ "WHERE a.consulta_id = b.id "
 			+ "AND a.muestra_id = c.id "
@@ -454,7 +455,26 @@ public interface MuestraDengueRepository extends JpaRepository<MxDengue, Long> {
 			+ "AND b.consulta = 'I' "
 			+ "AND d.cat_tipo_muestra_id = 12 "
 			+ "AND d.estudio = 3 "
-			+ "AND ((SELECT TIMESTAMPDIFF(DAY, c.fif, curdate()) AS dias_fif) <= 20) " //9 es el valor que tiene que llevar
-			+ "OR ((SELECT TIMESTAMPDIFF(DAY, c.fis, curdate()) AS dias_fis) <= 20);", nativeQuery=true)
-	List<MxDengue> findMuestrasDengueCandidatosPbmc();
+			+ "AND c.anulada = false "
+			+ "AND (((SELECT TIMESTAMPDIFF(DAY, c.fif, curdate()) AS dias_fif) <= 9) "
+			+ "OR ((SELECT TIMESTAMPDIFF(DAY, c.fis, curdate()) AS dias_fis) <= 9))", nativeQuery=true)
+	List<MxDengue> findMuestrasDengueCandidatos();
+	
+	@Query(value = "SELECT * "
+			+ "FROM mx_dengue a, muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND ((SELECT TIMESTAMPDIFF(DAY, b.fecha_toma, curdate()) AS dias_fechaToma) < 7) "
+			+ "AND b.mx_id = 2 " /**Dengue*/
+			+ "AND (a.tipo_prueba_id <> 7 or a.tipo_prueba_id is null) " /**PRD*/
+			+ "AND (b.retoma = false or a.completar_vol = false) "
+			+ "AND b.anulada = false "
+			+ "AND b.mx_tomada = true "
+			+ "ORDER BY b.fecha_toma DESC ", nativeQuery=true)
+	List<MxDengue> findMuestrasDengueRetomaYCompletarVol();
+	
+	@Query(value="SELECT * FROM mx_dengue a,  muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.id = :idMuestra ", nativeQuery=true)
+	MxDengue findMxDengueByIdMuestra(
+			@Param("idMuestra") Long idMuestra);
 }

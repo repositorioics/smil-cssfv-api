@@ -21,16 +21,16 @@ import lombok.NoArgsConstructor;
 		+ "where a.cat_recepcion_id = b.id "
 		+ "group by b.nombre_estudio")*/
 @Subselect("SELECT"
-		+ "		CASE"
-		+ "			WHEN b.nombre_estudio = 'Cohorte Pediátrica Dengue' THEN 'Dengue' "
-		+ "		    WHEN b.nombre_estudio = 'Cohorte Pediátrica Influenza' THEN 'Influenza' "
-		+ "			WHEN b.nombre_estudio = 'Cohorte Pediátrica Influenza UO1' THEN 'U01' "
-		+ "		    WHEN b.nombre_estudio = 'Estudio Cohorte Familia' THEN 'CHF' "
-		+ "			WHEN b.nombre_estudio = 'Transmisión Covid19' THEN 'CV' "
-		+ "            ELSE '' "
-		+ "		END AS NombreEstudio,  count(b.nombre_estudio) as cantidad "
-		+ "		FROM muestras a, cat_recepcion b WHERE a.cat_recepcion_id = b.id "
-		+ "		group by b.nombre_estudio")
+		+ "	CASE"
+		+ "	WHEN b.nombre_estudio = 'Cohorte Pediátrica Dengue' THEN 'Dengue' "
+		+ "	WHEN b.nombre_estudio = 'Cohorte Pediátrica Influenza' THEN 'Influenza' "
+		+ "	WHEN b.nombre_estudio = 'Cohorte Pediátrica Influenza UO1' THEN 'U01' "
+		+ " WHEN b.nombre_estudio = 'Estudio Cohorte Familia' THEN 'CHF' "
+		+ "	WHEN b.nombre_estudio = 'Transmisión Covid19' THEN 'CV' "
+		+ " ELSE '' "
+		+ "	END AS NombreEstudio,  count(b.nombre_estudio) as cantidad "
+		+ "	FROM muestras a, cat_recepcion b WHERE a.cat_recepcion_id = b.id "
+		+ "	group by b.nombre_estudio")
 public class MuestrasEstudiosView {
 	@Id
 	private String nombreestudio;

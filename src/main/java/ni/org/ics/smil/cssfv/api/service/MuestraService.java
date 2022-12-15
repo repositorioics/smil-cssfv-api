@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,6 +125,11 @@ public class MuestraService {
 		return repository.save(oldMuestra);
 	}
 	
+	public List<Muestra> muestrasInfluenzaRetoma() {
+		return repository.getMuestrasInfluenzaRetoma();
+	}
+	
+	
 	public Muestra getMxByCodLabScan(String codLabScan) {
 		return repository.findMxByCodLabScan(codLabScan);
 	}
@@ -163,6 +169,107 @@ public class MuestraService {
 	
 	public long countMuestraByViaje(Integer viaje) {
 		return repository.countMuestraByViaje(viaje);
+	}
+	
+	public List<Muestra> getMuestrasByCodigoParticipante(Integer codigo) {
+		return repository.findMxByCodigoParticipante(codigo);
+	}
+	
+	public List<?> mxPBMCPendientesEnvio() {
+		List<Map<String, Object>> result = repository.findAllMxPBMCPendientesEnvio();
+		return result;
+	}
+	
+	public List<?> mxROJOPendientesEnvio() {
+		List<Map<String, Object>> result = repository.findAllMxTuboRojoPendientesEnvio();
+		return result;
+	}
+	
+	public List<?> hisopadosPendientesEnvio() {
+		List<Map<String, Object>> result = repository.findAllHisopadosPendientesEnvio();
+		return result;
+	}
+	
+	public List<?> muestrasEnviadas(Integer viaje) {
+		List<Map<String, Object>> result = repository.findAllMuestrasEnviadas(viaje);
+		return result;
+	}
+	
+	public List<?> muestrasEnviadasPbmcByRangeDateAndViaje(String fecha1, String fecha2, Integer viaje) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		Date startDate = sdf.parse(fecha1);
+		Date endDate = sdf.parse(fecha2);
+
+		Calendar cal = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+
+		cal.setTime(startDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		cal2.setTime(endDate);
+		cal2.set(Calendar.HOUR_OF_DAY, 23);
+		cal2.set(Calendar.MINUTE, 59);
+		cal2.set(Calendar.SECOND, 59);
+
+		Date dFecha1 = cal.getTime();
+
+		Date dFecha2 = cal2.getTime();
+		List<Map<String, Object>> result = repository.findAllPBMCEnviadasByRangeDateAndViaje(dFecha1, dFecha2, viaje);
+		
+		return result;
+	}
+	
+	public List<?> muestrasEnviadasRojoByRangeDateAndViaje(String fecha1, String fecha2, Integer viaje) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = sdf.parse(fecha1);
+		Date endDate = sdf.parse(fecha2);
+
+		Calendar cal = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+
+		cal.setTime(startDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		cal2.setTime(endDate);
+		cal2.set(Calendar.HOUR_OF_DAY, 23);
+		cal2.set(Calendar.MINUTE, 59);
+		cal2.set(Calendar.SECOND, 59);
+
+		Date dFecha1 = cal.getTime();
+
+		Date dFecha2 = cal2.getTime();
+		List<Map<String, Object>> result = repository.findAllROJOEnviadasByRangeDateAndViaje(dFecha1, dFecha2, viaje);
+		return result;
+	}
+	
+	public List<?> muestrasEnviadasHisopadosByRangeDateAndViaje(String fecha1, String fecha2, Integer viaje) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = sdf.parse(fecha1);
+		Date endDate = sdf.parse(fecha2);
+
+		Calendar cal = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+
+		cal.setTime(startDate);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		cal2.setTime(endDate);
+		cal2.set(Calendar.HOUR_OF_DAY, 23);
+		cal2.set(Calendar.MINUTE, 59);
+		cal2.set(Calendar.SECOND, 59);
+
+		Date dFecha1 = cal.getTime();
+
+		Date dFecha2 = cal2.getTime();
+		List<Map<String, Object>> result = repository.findAllHISOPADOSEnviadosByRangeDateAndViaje(dFecha1, dFecha2, viaje);
+		return result;
 	}
 	/*
 	 * Tabla de muestras BHC
@@ -313,13 +420,36 @@ public class MuestraService {
 		 */
 	}
 	
-	public List<MxBhc> muestrasBhcPendinteEnvio(Long id) {
-		return repositoryBhc.getMuestrasBhcPendientesEnvio(id);
-	}
+	/*
+	 * public List<MxBhc> muestrasBhcPendinteEnvio(Long id) { return
+	 * repositoryBhc.getMuestrasBhcPendientesEnvio(id); }
+	 */
 	
-	public List<MxBhc> muestrasBhcEnviadas(Long id, Integer viaje) {
-		return repositoryBhc.getMuestrasBhcEnviadas(id, viaje);
-	}
+	/*
+	 * public List<MxBhc> muestrasBhcEnviadas(Long id, Integer viaje, String
+	 * startDate, String endDate) throws ParseException { List<MxBhc> mxBhc = new
+	 * ArrayList<MxBhc>(); if ((startDate != "" && startDate != null) && (endDate !=
+	 * "" && endDate != null)) { SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date fecha1 = sdf.parse(startDate); Date fecha2 = sdf.parse(endDate);
+	 * 
+	 * Calendar cal = Calendar.getInstance(); Calendar cal2 =
+	 * Calendar.getInstance();
+	 * 
+	 * cal.setTime(fecha1); cal.set(Calendar.HOUR_OF_DAY, 0);
+	 * cal.set(Calendar.MINUTE, 0); cal.set(Calendar.SECOND, 0);
+	 * 
+	 * cal2.setTime(fecha2); cal2.set(Calendar.HOUR_OF_DAY, 23);
+	 * cal2.set(Calendar.MINUTE, 59); cal2.set(Calendar.SECOND, 59);
+	 * 
+	 * Date dFecha1 = cal.getTime();
+	 * 
+	 * Date dFecha2 = cal2.getTime(); mxBhc =
+	 * repositoryBhc.getMuestrasBhcEnviadasRangoFecha(id, viaje, dFecha1, dFecha2);
+	 * } else { mxBhc = repositoryBhc.getMuestrasBhcEnviadas(id, viaje); } return
+	 * mxBhc; }
+	 */
 	
 	public String ultimaMuestraBHCByCode(Integer codigo) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
@@ -329,6 +459,10 @@ public class MuestraService {
 	public MxBhc muestraBHCByCodLabScan(String codLabScan) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryBhc.findMxBHCByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
+	}
+	
+	public MxBhc muestraBHCByIdMuestra(Long idMuestra) {
+		return repositoryBhc.findMxBHCByIdMuestra(idMuestra);
 	}
 	
 	
@@ -649,9 +783,19 @@ public class MuestraService {
 		return repositoryDengue.findMxDengueByCodLabScan(codeLabScan);
 	}
 	
-	public List<MxDengue> muestrasMxDengueCandidatosPbmc() {
-		return repositoryDengue.findMuestrasDengueCandidatosPbmc();
+	public List<MxDengue> muestrasMxDengueCandidatos() {
+		return repositoryDengue.findMuestrasDengueCandidatos();
 	}
+	
+	public List<MxDengue> muestrasMxDengueRetomaYCompletarVolumen() {
+		return repositoryDengue.findMuestrasDengueRetomaYCompletarVol();
+	}
+	
+	public MxDengue muestraDengueByIdMuestra(Long idMuestra) {
+		return repositoryDengue.findMxDengueByIdMuestra(idMuestra);
+	}
+	
+	
 	/*
 	 * Tabla de muestras Influenza
 	 * */
@@ -787,9 +931,10 @@ public class MuestraService {
 		return mxInfluenza;
 	}
 	
-	public List<MxInfluenza> muestrasInfluenzaPendinteEnvio(Long id) {
-		return repositoryInf.getMuestrasInfluenzaPendientesEnvio(id);
-	}
+	/*
+	 * public List<MxInfluenza> muestrasInfluenzaPendinteEnvio(Long id) { return
+	 * repositoryInf.getMuestrasInfluenzaPendientesEnvio(id); }
+	 */
 	
 	public String ultimaMuestraInfluenzaByCode(Integer codigo) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
@@ -799,6 +944,10 @@ public class MuestraService {
 	public MxInfluenza muestraInfluenzaByCodLabScan(String codLabScan) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryInf.findMxInfluenzaByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
+	}
+	
+	public MxInfluenza muestraInfluenzaByIdMuestra(Long idMuestra) {
+		return repositoryInf.findMxInfluenzaByIdMuestra(idMuestra);
 	}
 	
 	/*
@@ -933,13 +1082,38 @@ public class MuestraService {
 		return mxU01;
 	}
 	
-	public List<MxU01> muestrasUO1PendinteEnvio(Long id) {
-		return repositoryU01.getMuestrasUO1PendientesEnvio(id);
-	}
+	/*
+	 * public List<MxU01> muestrasUO1PendinteEnvio(Long id) { return
+	 * repositoryU01.getMuestrasUO1PendientesEnvio(id); }
+	 */
 	
-	public List<MxU01> muestrasUO1Enviadas(Long id, Integer viaje) {
-		return repositoryU01.getMuestrasUO1Enviodas(id, viaje);
-	}
+	/*
+	 * public List<MxU01> muestrasUO1Enviadas(Long id, Integer viaje, String
+	 * startDate, String endDate) throws ParseException { List<MxU01> mxU01 = new
+	 * ArrayList<MxU01>(); if ((startDate != "" && startDate != null) && (endDate !=
+	 * "" && endDate != null)) { SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date fecha1 = sdf.parse(startDate); Date fecha2 = sdf.parse(endDate);
+	 * 
+	 * Calendar cal = Calendar.getInstance(); Calendar cal2 =
+	 * Calendar.getInstance();
+	 * 
+	 * cal.setTime(fecha1); cal.set(Calendar.HOUR_OF_DAY, 0);
+	 * cal.set(Calendar.MINUTE, 0); cal.set(Calendar.SECOND, 0);
+	 * 
+	 * cal2.setTime(fecha2); cal2.set(Calendar.HOUR_OF_DAY, 23);
+	 * cal2.set(Calendar.MINUTE, 59); cal2.set(Calendar.SECOND, 59);
+	 * 
+	 * Date dFecha1 = cal.getTime();
+	 * 
+	 * Date dFecha2 = cal2.getTime(); mxU01 =
+	 * repositoryU01.getMuestrasUO1EnviodasRangoFecha(id, viaje, dFecha1, dFecha2);
+	 * } else { mxU01 = repositoryU01.getMuestrasUO1Enviadas(id, viaje); } return
+	 * mxU01;
+	 * 
+	 * }
+	 */
 	/*public List<MxU01> muestrasUO1VacunasPendinteEnvio() {
 		return repositoryU01.getMuestrasVacunasUO1PendientesEnvio();
 	}*/
@@ -952,6 +1126,10 @@ public class MuestraService {
 	public MxU01 muestraU01ByCodeLabScan(String codLabScan) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryU01.findMxU01ByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
+	}
+	
+	public MxU01 muestraU01ByIdMuestra(Long idMuestra) {
+		return repositoryU01.findMxU01ByIdMuestra(idMuestra);
 	}
 
 	/*
@@ -1088,13 +1266,37 @@ public class MuestraService {
 		return mxTransmision;
 	}
 	
-	public List<MxTransmision> muestrasTransmisionPendinteEnvio(Long id) {
-		return repositoryTransmision.getMuestrasTransmisionPendientesEnvio(id);
-	}
+	/*
+	 * public List<MxTransmision> muestrasTransmisionPendinteEnvio(Long id) { return
+	 * repositoryTransmision.getMuestrasTransmisionPendientesEnvio(id); }
+	 */
 	
-	public List<MxTransmision> muestrasTransmisionEnviadas(Long id, Integer viaje) {
-		return repositoryTransmision.getMuestrasTransmisionEnviadas(id, viaje);
-	}
+	/*
+	 * public List<MxTransmision> muestrasTransmisionEnviadas(Long id, Integer
+	 * viaje, String startDate, String endDate) throws ParseException {
+	 * List<MxTransmision> mxTransmision = new ArrayList<MxTransmision>(); if
+	 * ((startDate != "" && startDate != null) && (endDate != "" && endDate !=
+	 * null)) { SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 * 
+	 * Date fecha1 = sdf.parse(startDate); Date fecha2 = sdf.parse(endDate);
+	 * 
+	 * Calendar cal = Calendar.getInstance(); Calendar cal2 =
+	 * Calendar.getInstance();
+	 * 
+	 * cal.setTime(fecha1); cal.set(Calendar.HOUR_OF_DAY, 0);
+	 * cal.set(Calendar.MINUTE, 0); cal.set(Calendar.SECOND, 0);
+	 * 
+	 * cal2.setTime(fecha2); cal2.set(Calendar.HOUR_OF_DAY, 23);
+	 * cal2.set(Calendar.MINUTE, 59); cal2.set(Calendar.SECOND, 59);
+	 * 
+	 * Date dFecha1 = cal.getTime();
+	 * 
+	 * Date dFecha2 = cal2.getTime(); mxTransmision =
+	 * repositoryTransmision.getMuestrasTransmisionEnviadasRangoFecha(id, viaje,
+	 * dFecha1, dFecha2); } else { mxTransmision =
+	 * repositoryTransmision.getMuestrasTransmisionEnviadas(id, viaje); } return
+	 * mxTransmision; }
+	 */
 	
 	/*public List<MxTransmision> muestrasMonitoreoIntensivoPBMCPendinteEnvio() {
 		return repositoryTransmision.getMxMonitoreoIntensivoPBMCPendientesEnvio();
@@ -1123,6 +1325,10 @@ public class MuestraService {
 	public MxTransmision muestraTransmisionByCodLabScan(String codLabScan) {
 		CatAnioEstudio catAnioEstudio = repositoryCatAnioEstudio.findLastRecordAnioEstudio();
 		return repositoryTransmision.findMxTransmisionByCodLabScan(codLabScan, catAnioEstudio.getFechaInicio(), catAnioEstudio.getFechaFin());
+	}
+	
+	public MxTransmision muestraTransmisionByIdMuestra(Long idMuestra) {
+		return repositoryTransmision.findMxTransmisionByIdMuestra(idMuestra);
 	}
 	
 	/*

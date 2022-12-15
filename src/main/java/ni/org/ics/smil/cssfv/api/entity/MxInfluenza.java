@@ -51,7 +51,6 @@ public class MxInfluenza {
 	private CatResultadosMuestras resultadoPrId;*/
 	
 	//private String codLabScan;
-	private Boolean retoma;
 	private Boolean pruebaRapida;
 	private Boolean pruebaRapidaVsr;
 	//private String codLab;

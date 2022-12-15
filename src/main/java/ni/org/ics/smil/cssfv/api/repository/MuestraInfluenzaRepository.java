@@ -33,13 +33,14 @@ public interface MuestraInfluenzaRepository extends JpaRepository<MxInfluenza, L
 	MxInfluenza findTopByOrderByMuestraIdCodigoParticipanteDesc(
 			@Param("codigoParticipante") Integer codigoParticipante);
 	
-	@Query(value="SELECT * from mx_influenza a, muestras b "
-			+ "WHERE a.muestra_id = b.id "
-			+ "AND b.mx_id = :id "
-			+ "AND b.mx_enviada = false "
-			+ "AND b.anulada = false", nativeQuery=true)
-	List<MxInfluenza> getMuestrasInfluenzaPendientesEnvio(
-			@Param("id") Long id);
+	/*
+	 * @Query(value="SELECT * from mx_influenza a, muestras b " +
+	 * "WHERE a.muestra_id = b.id " + "AND b.mx_id = :id " +
+	 * "AND b.mx_enviada = false " + "AND b.anulada = false", nativeQuery=true)
+	 * List<MxInfluenza> getMuestrasInfluenzaPendientesEnvio(
+	 * 
+	 * @Param("id") Long id);
+	 */
 	
 	@Query(value="SELECT b.cod_lab "
 			+ "FROM mx_influenza a, muestras b "
@@ -63,5 +64,11 @@ public interface MuestraInfluenzaRepository extends JpaRepository<MxInfluenza, L
 	MxInfluenza findMxInfluenzaByCodLabScan(
 			@Param("codLabScan") String codLabScan, 
 			@Param("startDate") Date startDate,
-			@Param("endDate") Date endDate); 
+			@Param("endDate") Date endDate);
+	
+	@Query(value="SELECT * FROM mx_influenza a,  muestras b "
+			+ "WHERE a.muestra_id = b.id "
+			+ "AND b.id = :idMuestra ", nativeQuery=true)
+	MxInfluenza findMxInfluenzaByIdMuestra(
+			@Param("idMuestra") Long idMuestra);
 }
